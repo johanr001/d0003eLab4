@@ -1,11 +1,11 @@
 /*
- * reg_init.c
+ * avr_init.c
  *
  * Created: 21/02/2025 08:56:42
  *  Author: johan_csf2sgl
  */ 
 
-void rg_init{
+void avr_init(){
 	
 	CLKPR = 0x80;
 	CLKPR = 0x00;
@@ -16,5 +16,4 @@ void rg_init{
 	
 	TIMSK1 |= (1 << OCIE1A);
 	OCR1A=194; //f_oCnA = (f_clk_I/O)/(2*N*(1+OCRnA) 194 eller 3905 för en sekund
-	
 	};
