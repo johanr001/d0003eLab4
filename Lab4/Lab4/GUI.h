@@ -27,6 +27,6 @@ typedef struct {
 } GUI;
 
 #define initGUI(midPos) { initObject(), 0, midPos }
-
+#define void switchGen(GUI *this, uint8_t midPos){}
 
 #endif /* GUI_H_ */

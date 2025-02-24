@@ -31,6 +31,9 @@ typedef struct {
 } Pulsegenerator;
 
 #define initPulse(frec, frec_old, pos, reg) { initObject(), 0, frec, frec_old, pos. reg }
-
+#define uint16_t getFrec(Pulsegenerator *this, uint16_t frec){}
+#define uint16_t FrecInc(Pulsegenerator *this, uint16_t frec){}
+#define uint16_t FrecDec(Pulsegenerator *this, uint16_t frec){}
+#define void FrecReset(Pulsegenerator *this, uint16_t frec, uint16_t frec_old){}
 
 #endif /* PULSE_H_ */

@@ -23,6 +23,7 @@ uint16_t getFrec(Pulsegenerator *this, uint16_t frec){
 uint16_t FrecInc(Pulsegenerator *this, uint16_t frec){
 	
 	(this->frec)++;
+	printAt(pos,frec)
 }
 
 uint16_t FrecDec(Pulsegenerator *this, uint16_t frec){
@@ -32,9 +33,13 @@ uint16_t FrecDec(Pulsegenerator *this, uint16_t frec){
 	(this->frec)--;
 }
 
-uint16_t FrecReset(Pulsegenerator *this, uint16_t frec, uint16_t frec_old){
+void FrecReset(Pulsegenerator *this, uint16_t frec, uint16_t frec_old){
 	
 	this->frec_old=this->frec;
 	
 	this->frec=0;
 }
+
+void setPulse(Pulsegenerator *this, uint16_t frec){
+	// SKAPA PULSER PÅ PORTEN SOM VI SKICKAR IN MED WRITEBIT OCH PORTBIT PARAMETER & ARGUMENT
+

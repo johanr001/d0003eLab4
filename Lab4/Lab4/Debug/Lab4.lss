@@ -98,21 +98,9 @@ Disassembly of section .text:
       96:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 0000009a <main>:
-
-#include <avr/io.h>
-
-
-int main(void)
-{
       9a:	ff cf       	rjmp	.-2      	; 0x9a <main>
 
 0000009c <dispatch>:
-
-Thread pop(Thread *stack) {
-    Thread t = *stack;
-    *stack = t->next;
-    return t;
-}
       9c:	cf 93       	push	r28
       9e:	df 93       	push	r29
       a0:	00 d0       	rcall	.+0      	; 0xa2 <dispatch+0x6>
@@ -1920,12 +1908,6 @@ Thread pop(Thread *stack) {
     1134:	08 95       	ret
 
 00001136 <__vector_9>:
-        return 1;
-    }
-    return 0;
-}
-
-TIMER_OVERFLOW_INTERRUPT {
     1136:	1f 92       	push	r1
     1138:	0f 92       	push	r0
     113a:	0f b6       	in	r0, 0x3f	; 63
@@ -1941,14 +1923,11 @@ TIMER_OVERFLOW_INTERRUPT {
     114e:	9f 93       	push	r25
     1150:	ef 93       	push	r30
     1152:	ff 93       	push	r31
-    TIMER_OCLR();
-    overflows++;
     1154:	80 91 06 01 	lds	r24, 0x0106	; 0x800106 <__data_end>
     1158:	90 91 07 01 	lds	r25, 0x0107	; 0x800107 <__data_end+0x1>
     115c:	01 96       	adiw	r24, 0x01	; 1
     115e:	90 93 07 01 	sts	0x0107, r25	; 0x800107 <__data_end+0x1>
     1162:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <__data_end>
-    TIMERSET(timerQ);
     1166:	e0 91 0c 01 	lds	r30, 0x010C	; 0x80010c <timerQ>
     116a:	f0 91 0d 01 	lds	r31, 0x010D	; 0x80010d <timerQ+0x1>
     116e:	30 97       	sbiw	r30, 0x00	; 0
@@ -1984,7 +1963,6 @@ TIMER_OVERFLOW_INTERRUPT {
     11b6:	80 81       	ld	r24, Z
     11b8:	8d 7f       	andi	r24, 0xFD	; 253
     11ba:	80 83       	st	Z, r24
-}
     11bc:	ff 91       	pop	r31
     11be:	ef 91       	pop	r30
     11c0:	9f 91       	pop	r25
@@ -2002,8 +1980,6 @@ TIMER_OVERFLOW_INTERRUPT {
     11d8:	18 95       	reti
 
 000011da <__vector_7>:
-
-TIMER_COMPARE_INTERRUPT {
     11da:	1f 92       	push	r1
     11dc:	0f 92       	push	r0
     11de:	0f b6       	in	r0, 0x3f	; 63
@@ -2025,9 +2001,6 @@ TIMER_COMPARE_INTERRUPT {
     11fe:	bf 93       	push	r27
     1200:	ef 93       	push	r30
     1202:	ff 93       	push	r31
-    Time now;
-    TIMER_CCLR();
-    TIMERGET(now);
     1204:	c0 90 06 01 	lds	r12, 0x0106	; 0x800106 <__data_end>
     1208:	d0 90 07 01 	lds	r13, 0x0107	; 0x800107 <__data_end+0x1>
     120c:	20 91 84 00 	lds	r18, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7fc084>
@@ -2068,7 +2041,6 @@ TIMER_COMPARE_INTERRUPT {
     125a:	d9 2a       	or	r13, r25
     125c:	ea 2a       	or	r14, r26
     125e:	fb 2a       	or	r15, r27
-    while (timerQ && (timerQ->baseline - now <= 0))
     1260:	e0 91 0c 01 	lds	r30, 0x010C	; 0x80010c <timerQ>
     1264:	f0 91 0d 01 	lds	r31, 0x010D	; 0x80010d <timerQ+0x1>
     1268:	30 97       	sbiw	r30, 0x00	; 0
@@ -2087,19 +2059,12 @@ TIMER_COMPARE_INTERRUPT {
     1282:	1a 06       	cpc	r1, r26
     1284:	1b 06       	cpc	r1, r27
     1286:	ec f1       	brlt	.+122    	; 0x1302 <__vector_7+0x128>
-        enqueueByDeadline( dequeue(&timerQ), &msgQ );
     1288:	8c e0       	ldi	r24, 0x0C	; 12
     128a:	91 e0       	ldi	r25, 0x01	; 1
     128c:	0e 94 84 08 	call	0x1108	; 0x1108 <dequeue>
     1290:	6e e0       	ldi	r22, 0x0E	; 14
     1292:	71 e0       	ldi	r23, 0x01	; 1
     1294:	0e 94 41 08 	call	0x1082	; 0x1082 <enqueueByDeadline>
-
-TIMER_COMPARE_INTERRUPT {
-    Time now;
-    TIMER_CCLR();
-    TIMERGET(now);
-    while (timerQ && (timerQ->baseline - now <= 0))
     1298:	e0 91 0c 01 	lds	r30, 0x010C	; 0x80010c <timerQ>
     129c:	f0 91 0d 01 	lds	r31, 0x010D	; 0x80010d <timerQ+0x1>
     12a0:	30 97       	sbiw	r30, 0x00	; 0
@@ -2118,8 +2083,6 @@ TIMER_COMPARE_INTERRUPT {
     12ba:	1b 06       	cpc	r1, r27
     12bc:	2c f7       	brge	.-54     	; 0x1288 <__vector_7+0xae>
     12be:	21 c0       	rjmp	.+66     	; 0x1302 <__vector_7+0x128>
-        enqueueByDeadline( dequeue(&timerQ), &msgQ );
-    TIMERSET(timerQ);
     12c0:	9c 01       	movw	r18, r24
     12c2:	40 91 84 00 	lds	r20, 0x0084	; 0x800084 <__TEXT_REGION_LENGTH__+0x7fc084>
     12c6:	50 91 85 00 	lds	r21, 0x0085	; 0x800085 <__TEXT_REGION_LENGTH__+0x7fc085>
@@ -2144,16 +2107,8 @@ TIMER_COMPARE_INTERRUPT {
     12f6:	80 81       	ld	r24, Z
     12f8:	8d 7f       	andi	r24, 0xFD	; 253
     12fa:	80 83       	st	Z, r24
-    schedule();
     12fc:	0e 94 6e 00 	call	0xdc	; 0xdc <schedule>
-}
     1300:	0c c0       	rjmp	.+24     	; 0x131a <__vector_7+0x140>
-    Time now;
-    TIMER_CCLR();
-    TIMERGET(now);
-    while (timerQ && (timerQ->baseline - now <= 0))
-        enqueueByDeadline( dequeue(&timerQ), &msgQ );
-    TIMERSET(timerQ);
     1302:	82 81       	ldd	r24, Z+2	; 0x02
     1304:	93 81       	ldd	r25, Z+3	; 0x03
     1306:	a4 81       	ldd	r26, Z+4	; 0x04
@@ -2164,8 +2119,6 @@ TIMER_COMPARE_INTERRUPT {
     1314:	3b 07       	cpc	r19, r27
     1316:	69 f7       	brne	.-38     	; 0x12f2 <__vector_7+0x118>
     1318:	d3 cf       	rjmp	.-90     	; 0x12c0 <__vector_7+0xe6>
-    schedule();
-}
     131a:	ff 91       	pop	r31
     131c:	ef 91       	pop	r30
     131e:	bf 91       	pop	r27
