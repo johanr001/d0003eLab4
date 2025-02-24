@@ -6,15 +6,27 @@
  */ 
 
 
+#include <avr/io.h>
+
+#include <stdint.h>
+
+#include <stdbool.h>
+
+#include "TinyTimber.h"
+
 #ifndef GUI_H_
 #define GUI_H_
 
 typedef struct {
 	Object super;
+	
+	uint8_t midPos;
+	
+	
 
 } GUI;
 
-#define initCounter(en) { initObject(), 0, en }
+#define initGUI(midPos) { initObject(), 0, midPos }
 
 
 #endif /* GUI_H_ */

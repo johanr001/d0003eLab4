@@ -5,7 +5,11 @@
  *  Author: johan_csf2sgl
  */ 
 
+#include <avr/io.h>
 
+#include <stdint.h>
+
+#include "GUI.h"
 
 const uint16_t font[] = {
 	0x1551, // 0
@@ -19,6 +23,27 @@ const uint16_t font[] = {
 	0x1F51, // 8
 	0x1B51  // 9
 };
+
+void switchGen(GUI *this, uint8_t midPos){
+	
+	if (this->midPos==1) {
+		
+		this->midPos = 0;
+		
+		printAt(10, 2);
+		
+	}
+	
+	if (this->midPos==0) {
+		
+		this->midPos = 1;
+		
+		printAt(01, 2);
+		
+	}
+	
+}
+
 
 // Starta LCD
 void lcd_init() {

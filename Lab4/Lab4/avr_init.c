@@ -5,6 +5,8 @@
  *  Author: johan_csf2sgl
  */ 
 
+#include <avr/io.h>
+
 void avr_init(){
 	
 	CLKPR = 0x80;

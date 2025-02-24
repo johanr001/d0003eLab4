@@ -5,7 +5,9 @@
  *  Author: johan_csf2sgl
  */ 
 
-void btn_init{
+#include <avr/io.h>
+
+void btn_init(){
 	
 	//PORTB |= (1 << PB7);  // Pull up resistor på PB7
 
@@ -15,4 +17,4 @@ void btn_init{
 	PCMSK0|= (1<<PCINT3) | (1<<PCINT2);
 	PCMSK1|= (1<<PCINT15) | (1<<PCINT14) | (1<<PCINT12);
 	
-};
+}

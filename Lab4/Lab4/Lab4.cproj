@@ -168,6 +168,12 @@
     <Compile Include="TinyTimber.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="writeBit.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="writeBit.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Lab4.componentinfo.xml">

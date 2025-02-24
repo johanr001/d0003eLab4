@@ -12,8 +12,11 @@
 typedef struct {
 	Object super;
 
+	
+
+
 } Button;
 
-#define initCounter(en) { initObject(), 0, en }
+#define initButton(en) { initObject(), 0, en }
 
 #endif /* BUTTON_H_ */
