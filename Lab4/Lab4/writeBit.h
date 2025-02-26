@@ -17,7 +17,7 @@ typedef struct {
 
 // writeBit() skriver 0 eller 1 till en bit i PORTE (argumentet packar bit och värde).
 // toggleBit() vänder bit i PORTE baserat på portBit.
-int writeBit(Writebit *this, int arg);
-int toggleBit(Writebit *this, int arg);
+int writeBit(Writebit *self, int arg);
+int toggleBit(Writebit *self, int arg);
 
 #endif /* WRITEBIT_H_ */

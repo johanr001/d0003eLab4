@@ -19,11 +19,11 @@ typedef struct {
 
 // Funktioner för att byta generator (switchGen),
 // uppdatera display (updateDisplay), samt öka/minska/nollställa frekvens.
-int switchGen(GUI *this, int arg);
-int updateDisplay(GUI *this, int arg);
-int guiFrecInc(GUI *this, int arg);
-int guiFrecDec(GUI *this, int arg);
-int guiFrecReset(GUI *this, int arg);
+int switchGen(GUI *self, int arg);
+int updateDisplay(GUI *self, int arg);
+int guiFrecInc(GUI *self, int arg);
+int guiFrecDec(GUI *self, int arg);
+int guiFrecReset(GUI *self, int arg);
 
 // LCD-hjälpfunktioner
 void lcd_init(void);

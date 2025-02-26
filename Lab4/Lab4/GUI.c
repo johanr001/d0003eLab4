@@ -73,30 +73,30 @@ void printAt(long num, int pos) {
 
 // switchGen() byter vilken generator (left=0, right=1) som är aktiv.
 // Om redan rätt generator är vald, gör inget. Annars uppdatera midPos och kalla updateDisplay.
-int switchGen(GUI *this, int arg) {
-	if (this->midPos == arg) {
+int switchGen(GUI *self, int arg) {
+	if (self->midPos == arg) {
 		// Om samma generator redan är aktiv, gör inget.
 		return 0;
 	}
-	this->midPos = arg;
+	self->midPos = arg;
 	// Använder ASYNC för att anropa updateDisplay i en asynkron "tråd"
 	// så att vi inte blockeras, men ändå uppdaterar displayen direkt.
-	ASYNC(this, updateDisplay, 0);
+	ASYNC(self, updateDisplay, 0);
 	return 0;
 }
 
 // updateDisplay() hämtar generatorernas frekvenser synkront (SYNC)
 // och visar dem på LCD. Mittpositionen visar "10" om gen1 är vald, "01" om gen2 är vald.
-int updateDisplay(GUI *this, int arg) {
+int updateDisplay(GUI *self, int arg) {
 
 	// Vänstra sidan (pos 0..1): frekvens för gen1
-	printAt((SYNC(this->gen1, getFrec, 0)), 0);
+	printAt((SYNC(self->gen1, getFrec, 0)), 0);
 
 	// Högra sidan (pos 4..5): frekvens för gen2
-	printAt((SYNC(this->gen2, getFrec, 0)), 4);
+	printAt((SYNC(self->gen2, getFrec, 0)), 4);
 
 	// Mitt (pos 2..3): visa vilken generator som är aktiv ( "10" => gen1, "01" => gen2 )
-	if (this->midPos == 0) {
+	if (self->midPos == 0) {
 		printAt(10, 2);
 		} else {
 		printAt(1, 2);
@@ -107,36 +107,36 @@ int updateDisplay(GUI *this, int arg) {
 
 // guiFrecInc() ökar frekvensen för den aktiva generatorn via ASYNC,
 // och anropar sedan updateDisplay för att visa den nya frekvensen.
-int guiFrecInc(GUI *this, int arg) {
-	if (this->midPos == 0) {
-		ASYNC(this->gen1, FrecInc, 0);
+int guiFrecInc(GUI *self, int arg) {
+	if (self->midPos == 0) {
+		ASYNC(self->gen1, FrecInc, 0);
 		} else {
-		ASYNC(this->gen2, FrecInc, 0);
+		ASYNC(self->gen2, FrecInc, 0);
 	}
-	ASYNC(this, updateDisplay, 0);
+	ASYNC(self, updateDisplay, 0);
 	return 0;
 }
 
 // guiFrecDec() minskar frekvensen för den aktiva generatorn,
 // sedan uppdateras displayen.
-int guiFrecDec(GUI *this, int arg) {
-	if (this->midPos == 0) {
-		ASYNC(this->gen1, FrecDec, 0);
+int guiFrecDec(GUI *self, int arg) {
+	if (self->midPos == 0) {
+		ASYNC(self->gen1, FrecDec, 0);
 		} else {
-		ASYNC(this->gen2, FrecDec, 0);
+		ASYNC(self->gen2, FrecDec, 0);
 	}
-	ASYNC(this, updateDisplay, 0);
+	ASYNC(self, updateDisplay, 0);
 	return 0;
 }
 
 // guiFrecReset() växlar mellan lagrad och nuvarande frekvens (se FrecReset i pulsegen).
 // Efteråt uppdateras displayen för att visa förändringen.
-int guiFrecReset(GUI *this, int arg) {
-	if (this->midPos == 0) {
-		ASYNC(this->gen1, FrecReset, 0);
+int guiFrecReset(GUI *self, int arg) {
+	if (self->midPos == 0) {
+		ASYNC(self->gen1, FrecReset, 0);
 		} else {
-		ASYNC(this->gen2, FrecReset, 0);
+		ASYNC(self->gen2, FrecReset, 0);
 	}
-	ASYNC(this, updateDisplay, 0);
+	ASYNC(self, updateDisplay, 0);
 	return 0;
 }

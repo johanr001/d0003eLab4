@@ -24,13 +24,13 @@ typedef struct {
 #define initButton(gui_ptr) { initObject(), gui_ptr }
 
 // Prototyper för knappfunktioner.
-int checkButtons(Button *this, int arg);
-int debounceButtons(Button *this, int arg);
+int checkButtons(Button *self, int arg);
+int debounceButtons(Button *self, int arg);
 
-int leftdir(Button *this, int arg);
-int rightdir(Button *this, int arg);
-int updir(Button *this, int arg);
-int downdir(Button *this, int arg);
-int centerdir(Button *this, int arg);
+int leftdir(Button *self, int arg);
+int rightdir(Button *self, int arg);
+int updir(Button *self, int arg);
+int downdir(Button *self, int arg);
+int centerdir(Button *self, int arg);
 
 #endif /* BUTTON_H_ */

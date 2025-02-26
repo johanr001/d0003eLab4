@@ -22,31 +22,31 @@ void btn_init(){
 // checkButtons() anropas när en pin change interrupt sker.
 // I stället för att direkt läsa och reagera, använder vi AFTER(50ms) för debounce.
 // Det innebär att koden väntar 50 ms innan knapptrycket analyseras, för att undvika studs.
-int checkButtons(Button *this, int arg) {
+int checkButtons(Button *self, int arg) {
 	// AFTER schemalägger att debounceButtons ska köras om 50 ms.
 	// ASYNC eller SYNC vore för direkt anrop, men AFTER används för fördröjning/debounce.
-	AFTER(MSEC(50), this, debounceButtons, 0);
+	AFTER(MSEC(50), self, debounceButtons, 0);
 	return 0;
 }
 
 // debounceButtons() körs 50 ms senare, vilket ger knappen tid att stabilisera sig
 // (mindre risk för studs). Därefter kollar vi vilka knappar som faktiskt är nedtryckta
 // och anropar motsvarande funktion.
-int debounceButtons(Button *this, int arg) {
+int debounceButtons(Button *self, int arg) {
 	if (PRESSEDLT) {
-		leftdir(this, 0);
+		leftdir(self, 0);
 	}
 	if (PRESSEDRT) {
-		rightdir(this, 0);
+		rightdir(self, 0);
 	}
 	if (PRESSEDUP) {
-		updir(this, 0);
+		updir(self, 0);
 	}
 	if (PRESSEDDN) {
-		downdir(this, 0);
+		downdir(self, 0);
 	}
 	if (PRESSEDCN) {
-		centerdir(this, 0);
+		centerdir(self, 0);
 	}
 	return 0;
 }
@@ -57,41 +57,41 @@ int debounceButtons(Button *this, int arg) {
 // i TinyTimbers schemaläggning) utan att blockera denna knappkod.
 
 // leftdir => anropar switchGen(0) för att välja "vänster" generator, om PRESSEDLT är sant.
-int leftdir(Button *this, int arg) {
+int leftdir(Button *self, int arg) {
 	if (PRESSEDLT) {
-		ASYNC(this->gui, switchGen, 0);
+		ASYNC(self->gui, switchGen, 0);
 	}
 	return 0;
 }
 
 // rightdir => anropar switchGen(1) för "höger" generator.
-int rightdir(Button *this, int arg) {
+int rightdir(Button *self, int arg) {
 	if (PRESSEDRT) {
-		ASYNC(this->gui, switchGen, 1);
+		ASYNC(self->gui, switchGen, 1);
 	}
 	return 0;
 }
 
 // updir => anropar guiFrecInc() för att öka frekvensen.
-int updir(Button *this, int arg) {
+int updir(Button *self, int arg) {
 	if (PRESSEDUP) {
-		ASYNC(this->gui, guiFrecInc, 0);
+		ASYNC(self->gui, guiFrecInc, 0);
 	}
 	return 0;
 }
 
 // downdir => anropar guiFrecDec() för att minska frekvensen.
-int downdir(Button *this, int arg) {
+int downdir(Button *self, int arg) {
 	if (PRESSEDDN) {
-		ASYNC(this->gui, guiFrecDec, 0);
+		ASYNC(self->gui, guiFrecDec, 0);
 	}
 	return 0;
 }
 
 // centerdir => anropar guiFrecReset() för att växla mellan lagrad/återställd frekvens.
-int centerdir(Button *this, int arg) {
+int centerdir(Button *self, int arg) {
 	if (PRESSEDCN) {
-		ASYNC(this->gui, guiFrecReset, 0);
+		ASYNC(self->gui, guiFrecReset, 0);
 	}
 	return 0;
 }

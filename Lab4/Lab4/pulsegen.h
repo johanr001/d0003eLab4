@@ -26,10 +26,10 @@ typedef struct {
 // Metoder som en pulsgenerator stödjer:
 // setPulse togglar utgång, getFrec returnerar frekvens,
 // FrecInc/Ded/Reset justerar frekvens.
-int setPulse(Pulsegenerator *this, int arg);
-int getFrec(Pulsegenerator *this, int arg);
-int FrecInc(Pulsegenerator *this, int arg);
-int FrecDec(Pulsegenerator *this, int arg);
-int FrecReset(Pulsegenerator *this, int arg);
+int setPulse(Pulsegenerator *self, int arg);
+int getFrec(Pulsegenerator *self, int arg);
+int FrecInc(Pulsegenerator *self, int arg);
+int FrecDec(Pulsegenerator *self, int arg);
+int FrecReset(Pulsegenerator *self, int arg);
 
 #endif /* PULSE_H_ */

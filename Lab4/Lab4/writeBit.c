@@ -4,7 +4,7 @@
 
 // writeBit() sätter eller rensar angiven bit i PORTE.
 // 'arg' är ett packat heltal, där högbyte=bitnummer, lågbyte=0/1.
-int writeBit(Writebit *this, int arg) {
+int writeBit(Writebit *self, int arg) {
 	uint8_t bit = (arg >> 8) & 0xFF;
 	uint8_t value = arg & 0xFF;
 	if (value)
@@ -14,9 +14,9 @@ int writeBit(Writebit *this, int arg) {
 	return 0;
 }
 
-// toggleBit() vänder bit i PORTE motsvarande this->portBit.
+// toggleBit() vänder bit i PORTE motsvarande self->portBit.
 // Används om man vill växla till/från 1 (ex. en LED).
-int toggleBit(Writebit *this, int arg) {
-	PORTE ^= (1 << this->portBit);
+int toggleBit(Writebit *self, int arg) {
+	PORTE ^= (1 << self->portBit);
 	return 0;
 }
