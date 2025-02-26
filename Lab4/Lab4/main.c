@@ -22,7 +22,7 @@ Button button = initButton(&gui);
 
 // startApp() körs vid uppstart. Den startar genereringen av pulser
 // och anropar updateDisplay asynkront för att initiera LCD-uppdateringar.
-int startApp(GUI *self, int arg) {
+int startProgram(GUI *self, int arg) {
 	// Starta båda pulsgeneratorerna direkt (ASYNC så att vi inte blockerar).
 	ASYNC(&pulseGen1, setPulse, 0);
 	ASYNC(&pulseGen2, setPulse, 0);
@@ -48,5 +48,5 @@ int main(void) {
 	INSTALL(&button, checkButtons, IRQ_PCINT1);
 
 	// TINYTIMBER startar kärnan. Vi anropar startApp på gui som första metod.
-	return TINYTIMBER(&gui, startApp, 0);
+	return TINYTIMBER(&gui, startProgram, 0);
 }
