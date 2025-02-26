@@ -1,39 +1,35 @@
-/*
- * pulsegen.h
- *
- * Created: 2025-02-21 09:28:04
- *  Author: Amadeus
- */ 
-
-#include <avr/io.h>
-
-#include <stdint.h>
-
-#include <stdbool.h>
-
-#include "TinyTimber.h"
-
 #ifndef PULSE_H_
 #define PULSE_H_
 
+#include <avr/io.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "TinyTimber.h"
+#include "writeBit.h"
+
+// Pulsegenerator genererar pulser på en vald bit i PORTE.
+// frec (0..99) anger hur snabb toggling (0 => avstängd).
 typedef struct {
-	Object super;
-	
-	uint16_t frec;
-	
-	uint16_t frec_old;
-	
-	bool pos;
-	
-	uint16_t *reg;
-	
-	
+	Object super;   // Ärver från Object för TinyTimber
+	uint16_t frec;  // Aktuell frekvens
+	uint16_t frec_old; // Sparad frekvens
+	bool pos;       // true => hög output, false => låg
+	uint8_t bit;    // Vilken bit i PORTE som ska togglas
+	Writebit *wbitPtr; // Pekare till Writebit-objekt för att skriva bitar
 } Pulsegenerator;
 
-#define initPulse(frec, frec_old, pos, reg) { initObject(), 0, frec, frec_old, pos. reg }
-#define uint16_t getFrec(Pulsegenerator *this, uint16_t frec){}
-#define uint16_t FrecInc(Pulsegenerator *this, uint16_t frec){}
-#define uint16_t FrecDec(Pulsegenerator *this, uint16_t frec){}
-#define void FrecReset(Pulsegenerator *this, uint16_t frec, uint16_t frec_old){}
+// initPulse makro initierar objektet.
+// PACK_BIT är en hjälpmakro för att packa (bit,val) i en int.
+#define initPulse(bit, freq, wbitPointer) { initObject(), freq, 0, false, bit, wbitPointer }
+#define PACK_BIT(bit, value) (((bit) << 8) | ((value) & 0xFF))
+
+// Metoder som en pulsgenerator stödjer:
+// setPulse togglar utgång, getFrec returnerar frekvens,
+// FrecInc/Ded/Reset justerar frekvens.
+int setPulse(Pulsegenerator *this, int arg);
+int getFrec(Pulsegenerator *this, int arg);
+int FrecInc(Pulsegenerator *this, int arg);
+int FrecDec(Pulsegenerator *this, int arg);
+int FrecReset(Pulsegenerator *this, int arg);
 
 #endif /* PULSE_H_ */

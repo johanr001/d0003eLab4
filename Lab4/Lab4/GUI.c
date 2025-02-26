@@ -1,16 +1,11 @@
-/*
- * GUI.c
- *
- * Created: 21/02/2025 08:40:55
- *  Author: johan_csf2sgl
- */ 
-
+#include "GUI.h"
+#include "TinyTimber.h"
+#include "pulsegen.h"
 #include <avr/io.h>
-
 #include <stdint.h>
 
-#include "GUI.h"
-
+// font[] innehåller bitmönster för siffrorna 0-9 på LCD:n.
+// Varje siffra representeras som ett 16-bitars värde.
 const uint16_t font[] = {
 	0x1551, // 0
 	0x0110, // 1
@@ -24,25 +19,6 @@ const uint16_t font[] = {
 	0x1B51  // 9
 };
 
-void switchGen(GUI *this, uint8_t midPos){
-	
-	if (this->midPos==1) {
-		
-		this->midPos = 0;
-		
-		printAt(10, 2);
-		
-	}
-	
-	if (this->midPos==0) {
-		
-		this->midPos = 1;
-		
-		printAt(01, 2);
-		
-	}
-	
-}
 
 
 // Starta LCD
@@ -92,4 +68,75 @@ void printAt(long num, int pos) {
 	pp++;
 	writeChar( num % 10 + '0', pp);
 	
+}
+
+
+// switchGen() byter vilken generator (left=0, right=1) som är aktiv.
+// Om redan rätt generator är vald, gör inget. Annars uppdatera midPos och kalla updateDisplay.
+int switchGen(GUI *this, int arg) {
+	if (this->midPos == arg) {
+		// Om samma generator redan är aktiv, gör inget.
+		return 0;
+	}
+	this->midPos = arg;
+	// Använder ASYNC för att anropa updateDisplay i en asynkron "tråd"
+	// så att vi inte blockeras, men ändå uppdaterar displayen direkt.
+	ASYNC(this, updateDisplay, 0);
+	return 0;
+}
+
+// updateDisplay() hämtar generatorernas frekvenser synkront (SYNC)
+// och visar dem på LCD. Mittpositionen visar "10" om gen1 är vald, "01" om gen2 är vald.
+int updateDisplay(GUI *this, int arg) {
+
+	// Vänstra sidan (pos 0..1): frekvens för gen1
+	printAt((SYNC(this->gen1, getFrec, 0)), 0);
+
+	// Högra sidan (pos 4..5): frekvens för gen2
+	printAt((SYNC(this->gen2, getFrec, 0)), 4);
+
+	// Mitt (pos 2..3): visa vilken generator som är aktiv ( "10" => gen1, "01" => gen2 )
+	if (this->midPos == 0) {
+		printAt(10, 2);
+		} else {
+		printAt(1, 2);
+	}
+
+	return 0;
+}
+
+// guiFrecInc() ökar frekvensen för den aktiva generatorn via ASYNC,
+// och anropar sedan updateDisplay för att visa den nya frekvensen.
+int guiFrecInc(GUI *this, int arg) {
+	if (this->midPos == 0) {
+		ASYNC(this->gen1, FrecInc, 0);
+		} else {
+		ASYNC(this->gen2, FrecInc, 0);
+	}
+	ASYNC(this, updateDisplay, 0);
+	return 0;
+}
+
+// guiFrecDec() minskar frekvensen för den aktiva generatorn,
+// sedan uppdateras displayen.
+int guiFrecDec(GUI *this, int arg) {
+	if (this->midPos == 0) {
+		ASYNC(this->gen1, FrecDec, 0);
+		} else {
+		ASYNC(this->gen2, FrecDec, 0);
+	}
+	ASYNC(this, updateDisplay, 0);
+	return 0;
+}
+
+// guiFrecReset() växlar mellan lagrad och nuvarande frekvens (se FrecReset i pulsegen).
+// Efteråt uppdateras displayen för att visa förändringen.
+int guiFrecReset(GUI *this, int arg) {
+	if (this->midPos == 0) {
+		ASYNC(this->gen1, FrecReset, 0);
+		} else {
+		ASYNC(this->gen2, FrecReset, 0);
+	}
+	ASYNC(this, updateDisplay, 0);
+	return 0;
 }
