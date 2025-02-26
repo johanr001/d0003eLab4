@@ -19,20 +19,11 @@ void btn_init(){
 	PCMSK1 |= (1<<PCINT15) | (1<<PCINT14) | (1<<PCINT12);
 }
 
-// checkButtons() anropas när en pin change interrupt sker.
-// I stället för att direkt läsa och reagera, använder vi AFTER(50ms) för debounce.
-// Det innebär att koden väntar 50 ms innan knapptrycket analyseras, för att undvika studs.
-int checkButtons(Button *self, int arg) {
-	// AFTER schemalägger att debounceButtons ska köras om 50 ms.
-	// ASYNC eller SYNC vore för direkt anrop, men AFTER används för fördröjning/debounce.
-	AFTER(MSEC(50), self, debounceButtons, 0);
-	return 0;
-}
 
 // debounceButtons() körs 50 ms senare, vilket ger knappen tid att stabilisera sig
 // (mindre risk för studs). Därefter kollar vi vilka knappar som faktiskt är nedtryckta
 // och anropar motsvarande funktion.
-int debounceButtons(Button *self, int arg) {
+int buttonChecker(Button *self, int arg) {
 	if (PRESSEDLT) {
 		leftdir(self, 0);
 	}

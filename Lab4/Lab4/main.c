@@ -44,8 +44,8 @@ int main(void) {
 	btn_init();
 
 	// Installera knappobjektet som avbrottshanterare för PCINT0 och PCINT1.
-	INSTALL(&button, checkButtons, IRQ_PCINT0);
-	INSTALL(&button, checkButtons, IRQ_PCINT1);
+	INSTALL(&button, buttonChecker, IRQ_PCINT0);
+	INSTALL(&button, buttonChecker, IRQ_PCINT1);
 
 	// TINYTIMBER startar kärnan. Vi anropar startApp på gui som första metod.
 	return TINYTIMBER(&gui, startProgram, 0);

@@ -25,7 +25,7 @@ typedef struct {
 
 // Prototyper för knappfunktioner.
 int checkButtons(Button *self, int arg);
-int debounceButtons(Button *self, int arg);
+int buttonChecker(Button *self, int arg);
 
 int leftdir(Button *self, int arg);
 int rightdir(Button *self, int arg);
