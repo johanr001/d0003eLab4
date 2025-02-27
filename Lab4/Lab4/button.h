@@ -14,15 +14,17 @@
 typedef struct {
 	Object super;
 	GUI *gui;
+	bool held;
 } Button;
 
 
 #define initButton(guiPtr) { initObject(), guiPtr }
 
-int checkButtons(Button *self, int arg);
-int buttonCheckerLR(Button *self, int arg);
 
+int buttonCheckerLR(Button *self, int arg);
 int buttonCheckerUDC(Button *self, int arg);
+int holdCheckerUp(Button *self, int arg);
+int holdCheckerDown(Button *self, int arg);
 
 int leftdir(Button *self, int arg);
 int rightdir(Button *self, int arg);

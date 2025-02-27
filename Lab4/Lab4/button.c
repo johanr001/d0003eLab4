@@ -20,7 +20,25 @@ void btn_init(){
 }
 
 
-// buttonChecker() checkar vilken knapp som blivit tryckt.
+// HoldcheckerUp() checkar om den håller.
+int holdCheckerUp(Button *self, int arg) {
+	if (self->held && PRESSEDUP) {
+		ASYNC(self->gui, guiFrecInc, 0);
+		AFTER(MSEC(500), self, holdCheckerUp, 0);
+		} else {
+		self->held = false;
+	}
+}
+
+int holdCheckerDown(Button *self, int arg) {
+	if (self->held && PRESSEDDN) {
+		ASYNC(self->gui, guiFrecDec, 0);
+		AFTER(MSEC(500), self, holdCheckerDown, 0);
+		} else {
+		self->held = false;
+	}
+}
+	
 int buttonCheckerLR(Button *self, int arg) {
 	if (PRESSEDLT) {
 		leftdir(self, 0);
@@ -63,18 +81,22 @@ int rightdir(Button *self, int arg) {
 
 // updir() => anropar guiFrecInc() för att öka frekvensen.
 int updir(Button *self, int arg) {
-	if (PRESSEDUP) {
-		ASYNC(self->gui, guiFrecInc, 0);
+	if (PRESSEDUP) { // Check if the UP button is pressed.
+		self->held = true; // Set the held flag.
+		ASYNC(self->gui, guiFrecInc, 0); // Increment frequency.
+		ASYNC(self, holdCheckerUp, 0); // Start holdCheckerUp for repeated increments.
 	}
 	return 0;
 }
 
 // downdir() => anropar guiFrecDec() för att minska frekvensen.
 int downdir(Button *self, int arg) {
-	if (PRESSEDDN) {
-		ASYNC(self->gui, guiFrecDec, 0);
-	}
-	return 0;
+    if (PRESSEDDN) { // Check if the DOWN button is pressed.
+	    self->held = true; // Set the held flag.
+	    ASYNC(self->gui, guiFrecDec, 0); // Decrement frequency.
+	    ASYNC(self, holdCheckerDown, 0); // Start holdCheckerDown for repeated decrements.
+    }
+    return 0;
 }
 
 // centerdir() => anropar guiFrecReset() för att växla mellan lagrad/återställd frekvens.
