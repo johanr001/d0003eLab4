@@ -4,6 +4,7 @@
 #include "button.h"
 #include "avr_init.h"
 #include "writeBit.h"
+#include "interruptHandler.h"
 
 // Skapar Writebit-objekt för att kunna skriva/ta bort 1-bitar i PORTE.
 Writebit wbit4 = initWbit(4);
@@ -46,8 +47,9 @@ int main(void) {
 	btn_init();
 
 	// Installera knappobjektet som interrupthandler för PCINT0 och PCINT1.
-	INSTALL(&button, buttonCheckerLR, IRQ_PCINT0);
-	INSTALL(&button, buttonCheckerUDC, IRQ_PCINT1);
+	Interrupthandler interr = initInterr(&button);
+	INSTALL(&interr, horizontal, IRQ_PCINT0);
+	INSTALL(&interr, vertical, IRQ_PCINT1);
 
 	// TINYTIMBER startar kernel. Vi anropar startProgram på gui som första metod.
 	return TINYTIMBER(&gui, startProgram, 0);

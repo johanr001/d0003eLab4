@@ -11,7 +11,8 @@ main.d main.o: .././main.c .././TinyTimber.h .././pulsegen.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- .././writeBit.h .././GUI.h .././button.h .././avr_init.h
+ .././writeBit.h .././GUI.h .././button.h .././avr_init.h \
+ .././interruptHandler.h
 
 .././TinyTimber.h:
 
@@ -48,3 +49,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 .././button.h:
 
 .././avr_init.h:
+
+.././interruptHandler.h:

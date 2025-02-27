@@ -17,12 +17,13 @@ typedef struct{
 	
 } Interrupthandler;
 
+void horizontal(Interrupthandler *self, int arg);
+void vertical(Interrupthandler *self, int arg);	
+
 
 #ifndef INTERRUPTHANDLER_H_
 #define initInterr(btn) { initObject(), btn}
 
-	void horizontal(Interrupthandler *self, int arg);
-	void vertical(Interrupthandler *self, int arg);	
 
 
 #endif /* INTERRUPTHANDLER_H_ */
