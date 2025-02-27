@@ -6,6 +6,8 @@ button.c
 
 GUI.c
 
+interruptHandler.c
+
 main.c
 
 pulsegen.c

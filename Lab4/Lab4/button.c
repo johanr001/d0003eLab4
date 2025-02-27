@@ -21,13 +21,18 @@ void btn_init(){
 
 
 // buttonChecker() checkar vilken knapp som blivit tryckt.
-int buttonChecker(Button *self, int arg) {
+int buttonCheckerLR(Button *self, int arg) {
 	if (PRESSEDLT) {
 		leftdir(self, 0);
 	}
 	if (PRESSEDRT) {
 		rightdir(self, 0);
 	}
+	return 0;
+}
+
+// buttonChecker() checkar vilken knapp som blivit tryckt.
+int buttonCheckerUDC(Button *self, int arg) {
 	if (PRESSEDUP) {
 		updir(self, 0);
 	}
@@ -39,8 +44,6 @@ int buttonChecker(Button *self, int arg) {
 	}
 	return 0;
 }
-
-
 
 // leftdir() => anropar switchGen(0) för att välja "vänster" generator, om PRESSEDLT är sant.
 int leftdir(Button *self, int arg) {
