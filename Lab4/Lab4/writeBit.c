@@ -3,19 +3,15 @@
 #include "TinyTimber.h"
 
 // writeBit() sätter eller rensar angiven bit i PORTE.
-// 'arg' är ett packat heltal, där högbyte=bitnummer, lågbyte=0/1.
-int writeBit(Writebit *self, int arg) {
-	uint8_t bit = (arg >> 8) & 0xFF;
-	uint8_t value = arg & 0xFF;
+int writeBit(Writebit *self, int value) {
 	if (value)
-	PORTE |= (1 << bit);
+	PORTE |= (1 << self->portBit);
 	else
-	PORTE &= ~(1 << bit);
+	PORTE &= ~(1 << self->portBit);
 	return 0;
 }
 
 // toggleBit() vänder bit i PORTE motsvarande self->portBit.
-// Används om man vill växla till/från 1 (ex. en LED).
 int toggleBit(Writebit *self, int arg) {
 	PORTE ^= (1 << self->portBit);
 	return 0;

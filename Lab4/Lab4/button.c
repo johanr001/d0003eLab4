@@ -20,9 +20,7 @@ void btn_init(){
 }
 
 
-// debounceButtons() körs 50 ms senare, vilket ger knappen tid att stabilisera sig
-// (mindre risk för studs). Därefter kollar vi vilka knappar som faktiskt är nedtryckta
-// och anropar motsvarande funktion.
+// buttonChecker() checkar vilken knapp som blivit tryckt.
 int buttonChecker(Button *self, int arg) {
 	if (PRESSEDLT) {
 		leftdir(self, 0);
@@ -42,12 +40,9 @@ int buttonChecker(Button *self, int arg) {
 	return 0;
 }
 
-// Nedanstående funktioner kollar återigen om knappen fortfarande är nedtryckt
-// (så att man inte kör vidare om den hann släppas).
-// De använder ASYNC för att starta en metod i en annan "tråd" (d.v.s.
-// i TinyTimbers schemaläggning) utan att blockera denna knappkod.
 
-// leftdir => anropar switchGen(0) för att välja "vänster" generator, om PRESSEDLT är sant.
+
+// leftdir() => anropar switchGen(0) för att välja "vänster" generator, om PRESSEDLT är sant.
 int leftdir(Button *self, int arg) {
 	if (PRESSEDLT) {
 		ASYNC(self->gui, switchGen, 0);
@@ -55,7 +50,7 @@ int leftdir(Button *self, int arg) {
 	return 0;
 }
 
-// rightdir => anropar switchGen(1) för "höger" generator.
+// rightdir() => anropar switchGen(1) för "höger" generator.
 int rightdir(Button *self, int arg) {
 	if (PRESSEDRT) {
 		ASYNC(self->gui, switchGen, 1);
@@ -63,7 +58,7 @@ int rightdir(Button *self, int arg) {
 	return 0;
 }
 
-// updir => anropar guiFrecInc() för att öka frekvensen.
+// updir() => anropar guiFrecInc() för att öka frekvensen.
 int updir(Button *self, int arg) {
 	if (PRESSEDUP) {
 		ASYNC(self->gui, guiFrecInc, 0);
@@ -71,7 +66,7 @@ int updir(Button *self, int arg) {
 	return 0;
 }
 
-// downdir => anropar guiFrecDec() för att minska frekvensen.
+// downdir() => anropar guiFrecDec() för att minska frekvensen.
 int downdir(Button *self, int arg) {
 	if (PRESSEDDN) {
 		ASYNC(self->gui, guiFrecDec, 0);
@@ -79,7 +74,7 @@ int downdir(Button *self, int arg) {
 	return 0;
 }
 
-// centerdir => anropar guiFrecReset() för att växla mellan lagrad/återställd frekvens.
+// centerdir() => anropar guiFrecReset() för att växla mellan lagrad/återställd frekvens.
 int centerdir(Button *self, int arg) {
 	if (PRESSEDCN) {
 		ASYNC(self->gui, guiFrecReset, 0);

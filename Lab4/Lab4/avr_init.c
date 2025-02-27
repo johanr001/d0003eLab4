@@ -1,8 +1,7 @@
 #include <avr/io.h>
 #include "avr_init.h"
 
-// avr_init() initierar klockan och timer1 för att stödja TinyTimber-schemaläggning
-// samt tidberäkningar. Den ställer också in prescalers och andra timerregister.
+// avr_init() initierar klockan, timer1, prescalers etc.
 void avr_init(){
 	
 	CLKPR = 0x80;
