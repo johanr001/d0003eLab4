@@ -87,7 +87,6 @@ int switchGen(GUI *self, int arg) {
 // updateDisplay() hämtar generatorernas frekvenser
 // och visar dem på LCD. Mittpositionen visar vilken som är aktiv.
 int updateDisplay(GUI *self, int arg) {
-	(void)arg; // Suppressa warning för unused parameter 'arg'
 	// Vänstra sidan: frekvens för gen1
 	printAt((SYNC(self->gen1, getFrec, 0)), 0);
 
@@ -105,7 +104,6 @@ int updateDisplay(GUI *self, int arg) {
 // guiFrecInc() ökar frekvensen för den aktiva generatorn via ASYNC,
 // och anropar sedan updateDisplay för att visa den nya frekvensen.
 int guiFrecInc(GUI *self, int arg) {
-	(void)arg; // Suppressa warning för unused parameter 'arg'
 	if (self->midPos == 0) {
 		ASYNC(self->gen1, FrecInc, 0);
 		} else {
@@ -119,7 +117,6 @@ int guiFrecInc(GUI *self, int arg) {
 // guiFrecDec() minskar frekvensen för den aktiva generatorn,
 // sedan uppdateras displayen.
 int guiFrecDec(GUI *self, int arg) {
-	(void)arg; // Suppressa warning för unused parameter 'arg'
 	if (self->midPos == 0) {
 		ASYNC(self->gen1, FrecDec, 0);
 		} else {
@@ -132,7 +129,6 @@ int guiFrecDec(GUI *self, int arg) {
 // guiFrecReset() växlar mellan lagrad och nuvarande frekvens.
 // Efteråt uppdateras displayen för att visa förändringen.
 int guiFrecReset(GUI *self, int arg) {
-	(void)arg; // Suppressa warning för unused parameter 'arg'
 	if (self->midPos == 0) {
 		ASYNC(self->gen1, FrecReset, 0);
 		} else {

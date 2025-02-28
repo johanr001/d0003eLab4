@@ -23,11 +23,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000e7c  00000000  00000000  00008f20  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000a1d  00000000  00000000  00009d9c  2**0
+ 10 .debug_str    00000a1a  00000000  00000000  00009d9c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000032fe  00000000  00000000  0000a7b9  2**0
+ 11 .debug_loc    000032fe  00000000  00000000  0000a7b6  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000268  00000000  00000000  0000dab7  2**0
+ 12 .debug_ranges 00000268  00000000  00000000  0000dab4  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -636,7 +636,7 @@ int buttonCheckerUDC(Button *self, int arg) {
      3e4:	02 c0       	rjmp	.+4      	; 0x3ea <buttonCheckerUDC+0x26>
 	} 
 	else {
-		self->held = 0;  // Reset when neither up nor down is pressed.
+		self->held = 0;  // Reset när inte upp eller ner
      3e6:	1f 82       	std	Y+7, r1	; 0x07
      3e8:	1e 82       	std	Y+6, r1	; 0x06
 	}
@@ -898,7 +898,6 @@ int updateDisplay(GUI *self, int arg) {
      56a:	cf 93       	push	r28
      56c:	df 93       	push	r29
      56e:	ec 01       	movw	r28, r24
-	(void)arg; // Suppressa warning för unused parameter 'arg'
 	// Vänstra sidan: frekvens för gen1
 	printAt((SYNC(self->gen1, getFrec, 0)), 0);
      570:	40 e0       	ldi	r20, 0x00	; 0
@@ -1034,7 +1033,6 @@ int guiFrecInc(GUI *self, int arg) {
      63a:	cf 93       	push	r28
      63c:	df 93       	push	r29
      63e:	ec 01       	movw	r28, r24
-	(void)arg; // Suppressa warning för unused parameter 'arg'
 	if (self->midPos == 0) {
      640:	88 85       	ldd	r24, Y+8	; 0x08
      642:	81 11       	cpse	r24, r1
@@ -1124,7 +1122,6 @@ int guiFrecDec(GUI *self, int arg) {
      6d4:	cf 93       	push	r28
      6d6:	df 93       	push	r29
      6d8:	ec 01       	movw	r28, r24
-	(void)arg; // Suppressa warning för unused parameter 'arg'
 	if (self->midPos == 0) {
      6da:	88 85       	ldd	r24, Y+8	; 0x08
      6dc:	81 11       	cpse	r24, r1
@@ -1213,7 +1210,6 @@ int guiFrecReset(GUI *self, int arg) {
      76e:	cf 93       	push	r28
      770:	df 93       	push	r29
      772:	ec 01       	movw	r28, r24
-	(void)arg; // Suppressa warning för unused parameter 'arg'
 	if (self->midPos == 0) {
      774:	88 85       	ldd	r24, Y+8	; 0x08
      776:	81 11       	cpse	r24, r1
@@ -1514,7 +1510,7 @@ int setPulse(Pulsegenerator *self, int arg) {
      94e:	8c 81       	ldd	r24, Y+4	; 0x04
      950:	81 11       	cpse	r24, r1
      952:	13 c0       	rjmp	.+38     	; 0x97a <setPulse+0x3e>
-	    ASYNC(self->wbitPtr, writeBit, 0);
+	    ASYNC(self->wbit, writeBit, 0);
      954:	0f 81       	ldd	r16, Y+7	; 0x07
      956:	18 85       	ldd	r17, Y+8	; 0x08
      958:	c1 2c       	mov	r12, r1
@@ -1536,7 +1532,7 @@ int setPulse(Pulsegenerator *self, int arg) {
      978:	3d c0       	rjmp	.+122    	; 0x9f4 <setPulse+0xb8>
     }
 	// Annars toggla outputHigh (true/false => bit=1/0).
-    ASYNC(self->wbitPtr, toggleBit, 0);
+    ASYNC(self->wbit, toggleBit, 0);
      97a:	0f 81       	ldd	r16, Y+7	; 0x07
      97c:	18 85       	ldd	r17, Y+8	; 0x08
      97e:	c1 2c       	mov	r12, r1
@@ -1751,7 +1747,7 @@ int FrecReset(Pulsegenerator *self, int arg) {
      ac4:	85 83       	std	Z+5, r24	; 0x05
 	    self->frec = 0;
      ac6:	14 82       	std	Z+4, r1	; 0x04
-	    ASYNC(self->wbitPtr, writeBit, 0);
+	    ASYNC(self->wbit, writeBit, 0);
      ac8:	07 81       	ldd	r16, Z+7	; 0x07
      aca:	10 85       	ldd	r17, Z+8	; 0x08
      acc:	c1 2c       	mov	r12, r1

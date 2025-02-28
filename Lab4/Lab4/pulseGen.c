@@ -8,11 +8,11 @@
 int setPulse(Pulsegenerator *self, int arg) {
 	// Om frekvens=0, sätt porten låg och sluta toggla.
     if (self->frec == 0) {
-	    ASYNC(self->wbitPtr, writeBit, 0);
+	    ASYNC(self->wbit, writeBit, 0);
 	    return 0;
     }
 	// Annars toggla outputHigh (true/false => bit=1/0).
-    ASYNC(self->wbitPtr, toggleBit, 0);
+    ASYNC(self->wbit, toggleBit, 0);
 	
 	// Delay = 1000 / frekvens => period i ms, AFTER planerar nästa anrop.
     int delay = 1000 / self->frec;
@@ -58,7 +58,7 @@ int FrecReset(Pulsegenerator *self, int arg) {
 	    } else {
 	    self->frec_old = self->frec;
 	    self->frec = 0;
-	    ASYNC(self->wbitPtr, writeBit, 0);
+	    ASYNC(self->wbit, writeBit, 0);
     }
     return 0;
     }

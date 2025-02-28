@@ -851,24 +851,24 @@ END GROUP
  .debug_frame   0x00000500      0x948 TinyTimber.o
  .debug_frame   0x00000e48       0x34 writeBit.o
 
-.debug_str      0x00000000      0xa1d
+.debug_str      0x00000000      0xa1a
  *(.debug_str)
  .debug_str     0x00000000      0x2b3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega169p/avr5/crtatmega169p.o
- .debug_str     0x000002b3      0x23e button.o
-                                0x272 (size before relaxing)
- .debug_str     0x000004f1       0x8d GUI.o
-                                0x27e (size before relaxing)
- .debug_str     0x0000057e       0x47 interruptHandler.o
-                                0x23a (size before relaxing)
- .debug_str     0x000005c5      0x164 main.o
-                                0x381 (size before relaxing)
- .debug_str     0x00000729       0x27 pulsegen.o
-                                0x217 (size before relaxing)
- .debug_str     0x00000750       0x10 avr_init.o
+ .debug_str     0x000002b3      0x23b button.o
+                                0x26f (size before relaxing)
+ .debug_str     0x000004ee       0x8d GUI.o
+                                0x27b (size before relaxing)
+ .debug_str     0x0000057b       0x47 interruptHandler.o
+                                0x237 (size before relaxing)
+ .debug_str     0x000005c2      0x164 main.o
+                                0x37e (size before relaxing)
+ .debug_str     0x00000726       0x27 pulsegen.o
+                                0x214 (size before relaxing)
+ .debug_str     0x0000074d       0x10 avr_init.o
                                 0x16f (size before relaxing)
- .debug_str     0x00000760      0x29a TinyTimber.o
+ .debug_str     0x0000075d      0x29a TinyTimber.o
                                 0x55b (size before relaxing)
- .debug_str     0x000009fa       0x23 writeBit.o
+ .debug_str     0x000009f7       0x23 writeBit.o
                                 0x1b1 (size before relaxing)
 
 .debug_loc      0x00000000     0x32fe
