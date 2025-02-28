@@ -27,7 +27,7 @@ int holdCheckerUp(Button *self, int arg) {
 	}
 	if (self->holdUpRunning && PRESSEDUP) { // Om knappen fortfarande hålls nere
 		ASYNC(self->gui, guiFrecInc, 0); // Öka frekvensen
-		AFTER(MSEC(1000), self, holdCheckerUp, 0); // En ny körning efter 1000ms
+		AFTER(MSEC(100), self, holdCheckerUp, 0); // En ny körning efter 1000ms
 	}
 	else { // Om knappen har släppts, avsluta håll-funktionen
 		self->holdUpRunning = false;
@@ -42,7 +42,7 @@ int holdCheckerDown(Button *self, int arg) {
 	}
 	if (self->holdDownRunning && PRESSEDDN) { // Om knappen fortfarande hålls nere
 		ASYNC(self->gui, guiFrecDec, 0); // Minska frekvensen
-		AFTER(MSEC(1000), self, holdCheckerDown, 0); // En ny körning efter 1000ms
+		AFTER(MSEC(100), self, holdCheckerDown, 0); // En ny körning efter 1000ms
 	}
 	else { // Om knappen har släppts, sätt Running till false.
 		self->holdDownRunning = false;

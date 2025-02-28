@@ -141,7 +141,7 @@ int holdCheckerUp(Button *self, int arg) {
       d4:	70 e0       	ldi	r23, 0x00	; 0
       d6:	cb 01       	movw	r24, r22
       d8:	0e 94 ae 0f 	call	0x1f5c	; 0x1f5c <async>
-		AFTER(MSEC(1000), self, holdCheckerUp, 0); // En ny körning efter 1000ms
+		AFTER(MSEC(100), self, holdCheckerUp, 0); // En ny körning efter 1000ms
       dc:	0f 2e       	mov	r0, r31
       de:	fd e4       	ldi	r31, 0x4D	; 77
       e0:	ef 2e       	mov	r14, r31
@@ -152,8 +152,8 @@ int holdCheckerUp(Button *self, int arg) {
       ea:	20 e0       	ldi	r18, 0x00	; 0
       ec:	30 e0       	ldi	r19, 0x00	; 0
       ee:	a9 01       	movw	r20, r18
-      f0:	62 e1       	ldi	r22, 0x12	; 18
-      f2:	7a e7       	ldi	r23, 0x7A	; 122
+      f0:	65 e3       	ldi	r22, 0x35	; 53
+      f2:	7c e0       	ldi	r23, 0x0C	; 12
       f4:	80 e0       	ldi	r24, 0x00	; 0
       f6:	90 e0       	ldi	r25, 0x00	; 0
       f8:	0e 94 ae 0f 	call	0x1f5c	; 0x1f5c <async>
@@ -219,7 +219,7 @@ int holdCheckerDown(Button *self, int arg) {
      152:	70 e0       	ldi	r23, 0x00	; 0
      154:	cb 01       	movw	r24, r22
      156:	0e 94 ae 0f 	call	0x1f5c	; 0x1f5c <async>
-		AFTER(MSEC(1000), self, holdCheckerDown, 0); // En ny körning efter 1000ms
+		AFTER(MSEC(100), self, holdCheckerDown, 0); // En ny körning efter 1000ms
      15a:	0f 2e       	mov	r0, r31
      15c:	fc e8       	ldi	r31, 0x8C	; 140
      15e:	ef 2e       	mov	r14, r31
@@ -230,8 +230,8 @@ int holdCheckerDown(Button *self, int arg) {
      168:	20 e0       	ldi	r18, 0x00	; 0
      16a:	30 e0       	ldi	r19, 0x00	; 0
      16c:	a9 01       	movw	r20, r18
-     16e:	62 e1       	ldi	r22, 0x12	; 18
-     170:	7a e7       	ldi	r23, 0x7A	; 122
+     16e:	65 e3       	ldi	r22, 0x35	; 53
+     170:	7c e0       	ldi	r23, 0x0C	; 12
      172:	80 e0       	ldi	r24, 0x00	; 0
      174:	90 e0       	ldi	r25, 0x00	; 0
      176:	0e 94 ae 0f 	call	0x1f5c	; 0x1f5c <async>
