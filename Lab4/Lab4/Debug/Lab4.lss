@@ -140,7 +140,7 @@ int holdCheckerUp(Button *self, int arg) {
       d8:	70 e0       	ldi	r23, 0x00	; 0
       da:	cb 01       	movw	r24, r22
       dc:	0e 94 9d 0f 	call	0x1f3a	; 0x1f3a <async>
-		AFTER(MSEC(500), self, holdCheckerUp, 0);
+		AFTER(MSEC(100), self, holdCheckerUp, 0);
       e0:	0f 2e       	mov	r0, r31
       e2:	fd e4       	ldi	r31, 0x4D	; 77
       e4:	ef 2e       	mov	r14, r31
@@ -151,8 +151,8 @@ int holdCheckerUp(Button *self, int arg) {
       ee:	20 e0       	ldi	r18, 0x00	; 0
       f0:	30 e0       	ldi	r19, 0x00	; 0
       f2:	a9 01       	movw	r20, r18
-      f4:	69 e0       	ldi	r22, 0x09	; 9
-      f6:	7d e3       	ldi	r23, 0x3D	; 61
+      f4:	65 e3       	ldi	r22, 0x35	; 53
+      f6:	7c e0       	ldi	r23, 0x0C	; 12
       f8:	80 e0       	ldi	r24, 0x00	; 0
       fa:	90 e0       	ldi	r25, 0x00	; 0
       fc:	0e 94 9d 0f 	call	0x1f3a	; 0x1f3a <async>
@@ -211,7 +211,7 @@ int holdCheckerDown(Button *self, int arg) {
      154:	70 e0       	ldi	r23, 0x00	; 0
      156:	cb 01       	movw	r24, r22
      158:	0e 94 9d 0f 	call	0x1f3a	; 0x1f3a <async>
-		AFTER(MSEC(500), self, holdCheckerDown, 0);
+		AFTER(MSEC(100), self, holdCheckerDown, 0);
      15c:	0f 2e       	mov	r0, r31
      15e:	fb e8       	ldi	r31, 0x8B	; 139
      160:	ef 2e       	mov	r14, r31
@@ -222,8 +222,8 @@ int holdCheckerDown(Button *self, int arg) {
      16a:	20 e0       	ldi	r18, 0x00	; 0
      16c:	30 e0       	ldi	r19, 0x00	; 0
      16e:	a9 01       	movw	r20, r18
-     170:	69 e0       	ldi	r22, 0x09	; 9
-     172:	7d e3       	ldi	r23, 0x3D	; 61
+     170:	65 e3       	ldi	r22, 0x35	; 53
+     172:	7c e0       	ldi	r23, 0x0C	; 12
      174:	80 e0       	ldi	r24, 0x00	; 0
      176:	90 e0       	ldi	r25, 0x00	; 0
      178:	0e 94 9d 0f 	call	0x1f3a	; 0x1f3a <async>
@@ -575,7 +575,7 @@ int centerdir(Button *self, int arg) {
      386:	1c 99       	sbic	0x03, 4	; 3
      388:	14 c0       	rjmp	.+40     	; 0x3b2 <centerdir+0x38>
      38a:	fc 01       	movw	r30, r24
-		AFTER(MSEC(500),self->gui, guiFrecReset, 0);
+		AFTER(MSEC(100),self->gui, guiFrecReset, 0);
      38c:	04 81       	ldd	r16, Z+4	; 0x04
      38e:	15 81       	ldd	r17, Z+5	; 0x05
      390:	c1 2c       	mov	r12, r1
@@ -589,8 +589,8 @@ int centerdir(Button *self, int arg) {
      3a0:	20 e0       	ldi	r18, 0x00	; 0
      3a2:	30 e0       	ldi	r19, 0x00	; 0
      3a4:	a9 01       	movw	r20, r18
-     3a6:	69 e0       	ldi	r22, 0x09	; 9
-     3a8:	7d e3       	ldi	r23, 0x3D	; 61
+     3a6:	65 e3       	ldi	r22, 0x35	; 53
+     3a8:	7c e0       	ldi	r23, 0x0C	; 12
      3aa:	80 e0       	ldi	r24, 0x00	; 0
      3ac:	90 e0       	ldi	r25, 0x00	; 0
      3ae:	0e 94 9d 0f 	call	0x1f3a	; 0x1f3a <async>

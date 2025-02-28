@@ -24,7 +24,7 @@ void btn_init(){
 int holdCheckerUp(Button *self, int arg) {
 	if (self->held == +1 && PRESSEDUP) {
 		ASYNC(self->gui, guiFrecInc, 0);
-		AFTER(MSEC(500), self, holdCheckerUp, 0);
+		AFTER(MSEC(100), self, holdCheckerUp, 0);
 
 	}
 	return 0;
@@ -33,7 +33,7 @@ int holdCheckerUp(Button *self, int arg) {
 int holdCheckerDown(Button *self, int arg) {
 	if (self->held == -1 && PRESSEDDN) {
 		ASYNC(self->gui, guiFrecDec, 0);
-		AFTER(MSEC(500), self, holdCheckerDown, 0);
+		AFTER(MSEC(100), self, holdCheckerDown, 0);
 
 	}
 	return 0;
@@ -106,7 +106,7 @@ int downdir(Button *self, int arg) {
 // centerdir() => anropar guiFrecReset() för att växla mellan lagrad/återställd frekvens.
 int centerdir(Button *self, int arg) {
 	if (PRESSEDCN) {
-		AFTER(MSEC(500),self->gui, guiFrecReset, 0);
+		AFTER(MSEC(100),self->gui, guiFrecReset, 0);
 	}
 	return 0;
 }
