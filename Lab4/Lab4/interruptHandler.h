@@ -1,12 +1,7 @@
-/*
- * interruptHandler.h
- *
- * Created: 27/02/2025 10:30:12
- *  Author: johan_csf2sgl
- */ 
+#ifndef INTERRUPTHANDLER_H_
+#define INTERRUPTHANDLER_H_
 
 #include "TinyTimber.h"
-
 #include "button.h"
 
 typedef struct{
@@ -17,13 +12,9 @@ typedef struct{
 	
 } Interrupthandler;
 
-void horizontal(Interrupthandler *self, int arg);
-void vertical(Interrupthandler *self, int arg);	
+#define initInterruptHandler(button) { initObject(), button}
 
-
-#ifndef INTERRUPTHANDLER_H_
-#define initInterr(btn) { initObject(), btn}
-
-
+int horizontal(Interrupthandler *self, int arg);
+int vertandcent(Interrupthandler *self, int arg);
 
 #endif /* INTERRUPTHANDLER_H_ */

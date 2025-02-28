@@ -10,7 +10,7 @@ typedef struct {
 	Object super;
 	Pulsegenerator *gen1;
 	Pulsegenerator *gen2;
-	uint8_t midPos;
+	bool midPos;
 } GUI;
 
 

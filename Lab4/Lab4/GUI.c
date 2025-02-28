@@ -76,7 +76,6 @@ void printAt(long num, int pos) {
 int switchGen(GUI *self, int arg) {
 	if (self->midPos == arg) {
 		// Om samma generator redan är aktiv, gör inget.
-		return 0;
 	}
 	self->midPos = arg;
 	// Använder ASYNC för att anropa updateDisplay,
@@ -85,29 +84,28 @@ int switchGen(GUI *self, int arg) {
 	return 0;
 }
 
-// updateDisplay() hämtar generatorernas frekvenser synkront (SYNC)
+// updateDisplay() hämtar generatorernas frekvenser
 // och visar dem på LCD. Mittpositionen visar vilken som är aktiv.
 int updateDisplay(GUI *self, int arg) {
-
+	(void)arg; // Suppressa warning för unused parameter 'arg'
 	// Vänstra sidan: frekvens för gen1
 	printAt((SYNC(self->gen1, getFrec, 0)), 0);
 
 	// Högra sidan: frekvens för gen2
 	printAt((SYNC(self->gen2, getFrec, 0)), 4);
-
 	// Mitten: visa vilken generator som är aktiv, visar "10" om gen1 är vald, "01" om gen2 är vald.
 	if (self->midPos == 0) {
 		printAt(10, 2);
 		} else {
 		printAt(1, 2);
 	}
-
 	return 0;
 }
 
 // guiFrecInc() ökar frekvensen för den aktiva generatorn via ASYNC,
 // och anropar sedan updateDisplay för att visa den nya frekvensen.
 int guiFrecInc(GUI *self, int arg) {
+	(void)arg; // Suppressa warning för unused parameter 'arg'
 	if (self->midPos == 0) {
 		ASYNC(self->gen1, FrecInc, 0);
 		} else {
@@ -115,11 +113,13 @@ int guiFrecInc(GUI *self, int arg) {
 	}
 	ASYNC(self, updateDisplay, 0);
 	return 0;
+
 }
 
 // guiFrecDec() minskar frekvensen för den aktiva generatorn,
 // sedan uppdateras displayen.
 int guiFrecDec(GUI *self, int arg) {
+	(void)arg; // Suppressa warning för unused parameter 'arg'
 	if (self->midPos == 0) {
 		ASYNC(self->gen1, FrecDec, 0);
 		} else {
@@ -132,6 +132,7 @@ int guiFrecDec(GUI *self, int arg) {
 // guiFrecReset() växlar mellan lagrad och nuvarande frekvens.
 // Efteråt uppdateras displayen för att visa förändringen.
 int guiFrecReset(GUI *self, int arg) {
+	(void)arg; // Suppressa warning för unused parameter 'arg'
 	if (self->midPos == 0) {
 		ASYNC(self->gen1, FrecReset, 0);
 		} else {

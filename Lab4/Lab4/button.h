@@ -3,6 +3,7 @@
 
 #include "GUI.h"
 #include "TinyTimber.h"
+#include <stdbool.h>
 
 #define PRESSEDUP   (!( (PINB >> 6) & 0x01 ))
 #define PRESSEDDN   (!( (PINB >> 7) & 0x01 ))
@@ -10,16 +11,17 @@
 #define PRESSEDRT   (!( (PINE >> 3) & 0x01 ))
 #define PRESSEDCN   (!( (PINB >> 4) & 0x01 ))
 
-// Button-struktur, innehåller en GUI-pekare för att kunna anropa GUI-funktioner
+// Button-struct, innehåller en GUI-pekare för att kunna anropa GUI-funktioner
 typedef struct {
 	Object super;
 	GUI *gui;
-	bool held;
+	int held; // "-1" för "DOWN", "0" för "NEUTRAL", "+1" för "UP"
 } Button;
 
 
-#define initButton(guiPtr) { initObject(), guiPtr }
+#define initButton(guiPtr) { initObject(), guiPtr, 0 }
 
+void btn_init();
 
 int buttonCheckerLR(Button *self, int arg);
 int buttonCheckerUDC(Button *self, int arg);

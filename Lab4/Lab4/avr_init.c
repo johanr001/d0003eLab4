@@ -3,7 +3,6 @@
 
 // avr_init() initierar klockan, timer1, prescalers etc.
 void avr_init(){
-	
 	CLKPR = 0x80;
 	CLKPR = 0x00;
 	
@@ -16,5 +15,4 @@ void avr_init(){
 	
 	TIMSK1 |= (1 << OCIE1A);
 	OCR1A=194; //f_oCnA = (f_clk_I/O)/(2*N*(1+OCRnA) 194 eller 3905 för en sekund
-
 };

@@ -3,8 +3,8 @@
 #include "TinyTimber.h"
 
 // writeBit() sätter eller rensar angiven bit i PORTE.
-int writeBit(Writebit *self, int value) {
-	if (value)
+int writeBit(Writebit *self, int arg) {
+	if (arg)
 	PORTE |= (1 << self->portBit);
 	else
 	PORTE &= ~(1 << self->portBit);

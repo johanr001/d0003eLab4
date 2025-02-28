@@ -22,29 +22,29 @@ void btn_init(){
 
 // HoldcheckerUp() checkar om den håller.
 int holdCheckerUp(Button *self, int arg) {
-	if (self->held && PRESSEDUP) {
+	if (self->held == +1 && PRESSEDUP) {
 		ASYNC(self->gui, guiFrecInc, 0);
 		AFTER(MSEC(500), self, holdCheckerUp, 0);
-		} else {
-		self->held = false;
+
 	}
+	return 0;
 }
 
 int holdCheckerDown(Button *self, int arg) {
-	if (self->held && PRESSEDDN) {
+	if (self->held == -1 && PRESSEDDN) {
 		ASYNC(self->gui, guiFrecDec, 0);
 		AFTER(MSEC(500), self, holdCheckerDown, 0);
-		} else {
-		self->held = false;
+
 	}
+	return 0;
 }
 	
 int buttonCheckerLR(Button *self, int arg) {
 	if (PRESSEDLT) {
-		leftdir(self, 0);
+		leftdir(self,0);
 	}
 	if (PRESSEDRT) {
-		rightdir(self, 0);
+		rightdir(self,0);
 	}
 	return 0;
 }
@@ -53,17 +53,21 @@ int buttonCheckerLR(Button *self, int arg) {
 int buttonCheckerUDC(Button *self, int arg) {
 	if (PRESSEDUP) {
 		updir(self, 0);
-	}
-	if (PRESSEDDN) {
+	} 
+	else if (PRESSEDDN) {
 		downdir(self, 0);
+	} 
+	else {
+		self->held = 0;  // Reset när inte upp eller ner
 	}
+	
 	if (PRESSEDCN) {
 		centerdir(self, 0);
 	}
 	return 0;
 }
 
-// leftdir() => anropar switchGen(0) för att välja "vänster" generator, om PRESSEDLT är sant.
+// leftdir() => anropar switchGen(0) för att välja "vänster" generator.
 int leftdir(Button *self, int arg) {
 	if (PRESSEDLT) {
 		ASYNC(self->gui, switchGen, 0);
@@ -81,28 +85,28 @@ int rightdir(Button *self, int arg) {
 
 // updir() => anropar guiFrecInc() för att öka frekvensen.
 int updir(Button *self, int arg) {
-	if (PRESSEDUP) { // Check if the UP button is pressed.
-		self->held = true; // Set the held flag.
-		ASYNC(self->gui, guiFrecInc, 0); // Increment frequency.
-		ASYNC(self, holdCheckerUp, 0); // Start holdCheckerUp for repeated increments.
+	if (PRESSEDUP && self->held == 0) { // Checka om knappen är nerclickad och inte held. Annars spamclick gör snabbare scroll.
+		self->held = +1; // Sätt held till +1
+		ASYNC(self->gui, guiFrecInc, 0); // Öka frekvensen
+		AFTER(MSEC(500),self, holdCheckerUp, 0); // Starta holdCheckerUp() funktionen för att repetera
 	}
 	return 0;
 }
 
 // downdir() => anropar guiFrecDec() för att minska frekvensen.
 int downdir(Button *self, int arg) {
-    if (PRESSEDDN) { // Check if the DOWN button is pressed.
-	    self->held = true; // Set the held flag.
-	    ASYNC(self->gui, guiFrecDec, 0); // Decrement frequency.
-	    ASYNC(self, holdCheckerDown, 0); // Start holdCheckerDown for repeated decrements.
+    if (PRESSEDDN && self->held == 0) { // Checka om knappen är nerclickad och inte held. Annars spamclick gör snabbare scroll.
+	    self->held = -1; // Sätt held till true
+	    ASYNC(self->gui, guiFrecDec, 0); // Minska frekvensen
+	    AFTER(MSEC(500),self, holdCheckerDown, 0); // Starta holdCheckerDown() funktionen för att repetera
     }
-    return 0;
+	return 0;
 }
 
 // centerdir() => anropar guiFrecReset() för att växla mellan lagrad/återställd frekvens.
 int centerdir(Button *self, int arg) {
 	if (PRESSEDCN) {
-		ASYNC(self->gui, guiFrecReset, 0);
+		AFTER(MSEC(500),self->gui, guiFrecReset, 0);
 	}
 	return 0;
 }

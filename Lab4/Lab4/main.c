@@ -13,8 +13,8 @@ Writebit wbit6 = initWbit(6);
 
 // Skapar två pulsgeneratorer (pulseGen1, pulseGen2) som styr bit 4 och bit 6 i PORTE.
 // De får en pekare till wbit så att de kan anropa writeBit-funktioner.
-Pulsegenerator pulseGen1 = initPulse(4, 0, &wbit4);
-Pulsegenerator pulseGen2 = initPulse(6, 0, &wbit6);
+Pulsegenerator pulseGen1 = initPulse(&wbit4);
+Pulsegenerator pulseGen2 = initPulse(&wbit6);
 
 // Skapar ett GUI-objekt som refererar båda pulsgeneratorerna,
 // för att kunna visa och styra deras frekvenser på LCD.
@@ -23,9 +23,12 @@ GUI gui = initGUI(&pulseGen1, &pulseGen2);
 // Skapar ett Button-objekt som kopplas till GUI för att byta generator/frekvens.
 Button button = initButton(&gui);
 
+// Skapar ett InterruptHandler-objekt som kopplas till button för att kunna calla button funktionerna.
+Interrupthandler interrupt = initInterruptHandler(&button);
+
 // startProgram() körs vid uppstart. Den startar genereringen av pulser
 // och anropar updateDisplay vid start.
-int startProgram(GUI *self, int arg) {
+int startProgram(GUI *self) {
 	// Starta båda pulsgeneratorerna direkt (ASYNC så att vi inte blockerar).
 	ASYNC(&pulseGen1, setPulse, 0);
 	ASYNC(&pulseGen2, setPulse, 0);
@@ -47,9 +50,9 @@ int main(void) {
 	btn_init();
 
 	// Installera knappobjektet som interrupthandler för PCINT0 och PCINT1.
-	Interrupthandler interr = initInterr(&button);
-	INSTALL(&interr, horizontal, IRQ_PCINT0);
-	INSTALL(&interr, vertical, IRQ_PCINT1);
+
+	INSTALL(&interrupt, horizontal, IRQ_PCINT0);
+	INSTALL(&interrupt, vertandcent, IRQ_PCINT1);
 
 	// TINYTIMBER startar kernel. Vi anropar startProgram på gui som första metod.
 	return TINYTIMBER(&gui, startProgram, 0);
