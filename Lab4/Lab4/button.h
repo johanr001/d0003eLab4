@@ -15,11 +15,14 @@
 typedef struct {
 	Object super;
 	GUI *gui;
-	int held; // "-1" för "DOWN", "0" för "NEUTRAL", "+1" för "UP"
+	bool heldUp; // Checkar om "UP" är nedtryckt.
+	bool heldDown; // Checkar om "DOWN" är nedtryckt.
+	bool holdUpRunning; // Checkar om HoldUp funktion är running, så vi inte får extra om man clickar snabbt. Då får vi flera scrolls som kör samtidigt.
+	bool holdDownRunning; // Checkar om HoldUp funktion är running, så vi inte får extra om man clickar snabbt. Då får vi flera scrolls som kör samtidigt.
 } Button;
 
 
-#define initButton(guiPtr) { initObject(), guiPtr, 0 }
+#define initButton(gui) { initObject(), gui, 0, 0, 0, 0 }
 
 void btn_init();
 

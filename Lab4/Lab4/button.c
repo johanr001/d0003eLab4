@@ -20,54 +20,69 @@ void btn_init(){
 }
 
 
-// HoldcheckerUp() checkar om den håller.
+// HoldcheckerUp() kontrollerar om knappen hålls nere och fortsätter att öka frekvensen.
 int holdCheckerUp(Button *self, int arg) {
-	if (self->held == +1 && PRESSEDUP) {
-		ASYNC(self->gui, guiFrecInc, 0);
-		AFTER(MSEC(100), self, holdCheckerUp, 0);
-
+	if (!self->holdUpRunning) { // Om funktionen inte körs, avsluta
+		return 0;
+	}
+	if (self->holdUpRunning && PRESSEDUP) { // Om knappen fortfarande hålls nere
+		ASYNC(self->gui, guiFrecInc, 0); // Öka frekvensen
+		AFTER(MSEC(1000), self, holdCheckerUp, 0); // En ny körning efter 1000ms
+	}
+	else { // Om knappen har släppts, avsluta håll-funktionen
+		self->holdUpRunning = false;
 	}
 	return 0;
 }
 
+// HoldcheckerDown() kontrollerar om knappen hålls nere och fortsätter att minska frekvensen.
 int holdCheckerDown(Button *self, int arg) {
-	if (self->held == -1 && PRESSEDDN) {
-		ASYNC(self->gui, guiFrecDec, 0);
-		AFTER(MSEC(100), self, holdCheckerDown, 0);
-
+	if (!self->holdDownRunning) { // Om funktionen inte körs, avsluta
+		return 0;
+	}
+	if (self->holdDownRunning && PRESSEDDN) { // Om knappen fortfarande hålls nere
+		ASYNC(self->gui, guiFrecDec, 0); // Minska frekvensen
+		AFTER(MSEC(1000), self, holdCheckerDown, 0); // En ny körning efter 1000ms
+	}
+	else { // Om knappen har släppts, sätt Running till false.
+		self->holdDownRunning = false;
 	}
 	return 0;
 }
-	
+
+// buttonCheckerLR() kontrollerar om vänster eller höger knappen har blivit tryckt.
 int buttonCheckerLR(Button *self, int arg) {
 	if (PRESSEDLT) {
-		leftdir(self,0);
+		leftdir(self, 0);
 	}
 	if (PRESSEDRT) {
-		rightdir(self,0);
+		rightdir(self, 0);
 	}
 	return 0;
 }
 
-// buttonChecker() checkar vilken knapp som blivit tryckt.
+
+// buttonCheckerUDC() kontrollerar om upp, ner eller center knappen har blivit tryckt.
 int buttonCheckerUDC(Button *self, int arg) {
 	if (PRESSEDUP) {
 		updir(self, 0);
-	} 
-	else if (PRESSEDDN) {
-		downdir(self, 0);
-	} 
-	else {
-		self->held = 0;  // Reset när inte upp eller ner
 	}
-	
+	else {
+		self->heldUp = false; // Om knappen inte är nedtryckt, sätt heldUp till False
+	}
+	if (PRESSEDDN) {
+		downdir(self, 0); // Hantera ner-knappen
+	}
+	else {
+		self->heldDown = false; // Om knappen inte är nedtryckt, sätt heldDown till False
+	}
 	if (PRESSEDCN) {
 		centerdir(self, 0);
 	}
 	return 0;
 }
 
-// leftdir() => anropar switchGen(0) för att välja "vänster" generator.
+// leftdir() => anropar switchGen(0) för att välja vänster generator.
 int leftdir(Button *self, int arg) {
 	if (PRESSEDLT) {
 		ASYNC(self->gui, switchGen, 0);
@@ -75,7 +90,7 @@ int leftdir(Button *self, int arg) {
 	return 0;
 }
 
-// rightdir() => anropar switchGen(1) för "höger" generator.
+// rightdir() => anropar switchGen(1) för höger generator.
 int rightdir(Button *self, int arg) {
 	if (PRESSEDRT) {
 		ASYNC(self->gui, switchGen, 1);
@@ -85,24 +100,37 @@ int rightdir(Button *self, int arg) {
 
 // updir() => anropar guiFrecInc() för att öka frekvensen.
 int updir(Button *self, int arg) {
-	if (PRESSEDUP && self->held == 0) { // Checka om knappen är nerclickad och inte held. Annars spamclick gör snabbare scroll.
-		self->held = +1; // Sätt held till +1
-		ASYNC(self->gui, guiFrecInc, 0); // Öka frekvensen
-		AFTER(MSEC(500),self, holdCheckerUp, 0); // Starta holdCheckerUp() funktionen för att repetera
+	// Kontrollera om "UP" är nedtryckt och inte redan held
+	if (PRESSEDUP && !self->heldUp) {
+		self->heldUp = true; // Markera att knappen hålls nere
+		ASYNC(self->gui, guiFrecInc, 0); // Öka frekvensen direkt vid första trycket
+		if (!self->holdUpRunning) { // Checka om hold funktionen redan körs
+			self->holdUpRunning = true;
+			AFTER(MSEC(500), self, holdCheckerUp, 0); // Starta holdCheckerUp efter 500ms
+		}
+	}
+	else if (!PRESSEDUP) { // När knappen släpps, återställ flaggan
+		self->heldUp = false;
 	}
 	return 0;
 }
 
 // downdir() => anropar guiFrecDec() för att minska frekvensen.
 int downdir(Button *self, int arg) {
-    if (PRESSEDDN && self->held == 0) { // Checka om knappen är nerclickad och inte held. Annars spamclick gör snabbare scroll.
-	    self->held = -1; // Sätt held till true
-	    ASYNC(self->gui, guiFrecDec, 0); // Minska frekvensen
-	    AFTER(MSEC(500),self, holdCheckerDown, 0); // Starta holdCheckerDown() funktionen för att repetera
-    }
+	// Kontrollera om "DOWN" är nedtryckt och inte redan held
+	if (PRESSEDDN && !self->heldDown) {
+		self->heldDown = true; // Markera att knappen hålls nere
+		ASYNC(self->gui, guiFrecDec, 0); // Minska frekvensen direkt vid första trycket
+		if (!self->holdDownRunning) { // Kontrollera om hold funktionen redan körs
+			self->holdDownRunning = true;
+			AFTER(MSEC(500), self, holdCheckerDown, 0); // Starta holdCheckerDown efter 500ms
+		}
+	}
+	else if (!PRESSEDDN) { // När knappen släpps, återställ flaggan
+		self->heldDown = false;
+	}
 	return 0;
 }
-
 // centerdir() => anropar guiFrecReset() för att växla mellan lagrad/återställd frekvens.
 int centerdir(Button *self, int arg) {
 	if (PRESSEDCN) {

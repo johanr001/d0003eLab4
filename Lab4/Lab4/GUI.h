@@ -14,7 +14,7 @@ typedef struct {
 } GUI;
 
 
-#define initGUI(p1, p2) { initObject(), p1, p2, 0 }
+#define initGUI(gen1, gen2) { initObject(), gen1, gen2, 0 }
 
 
 int switchGen(GUI *self, int arg);
