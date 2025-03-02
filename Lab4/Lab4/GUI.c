@@ -78,8 +78,7 @@ int switchGen(GUI *self, int arg) {
 		// Om samma generator redan är aktiv, gör inget.
 	}
 	self->midPos = arg;
-	// Använder ASYNC för att anropa updateDisplay,
-	// så att vi inte blockeras, men ändå uppdaterar displayen direkt.
+	// Använder ASYNC för att anropa updateDisplay()
 	ASYNC(self, updateDisplay, 0);
 	return 0;
 }
