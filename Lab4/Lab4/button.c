@@ -143,12 +143,26 @@ int pressSimulator(Button *self, int arg) {
 	static bool toggle = 0;
 	
 	if (toggle) {
+		ASYNC(self->gui, switchGen, 0);
 		ASYNC(self->gui, guiFrecInc, 0);
+		ASYNC(self->gui, guiFrecInc, 0);
+		ASYNC(self->gui, guiFrecReset, 0);
+		ASYNC(self->gui, guiFrecInc, 0);
+		ASYNC(self->gui, guiFrecInc, 0);
+		ASYNC(self->gui, guiFrecDec, 0);
+		ASYNC(self->gui, guiFrecDec, 0);
 		} else {
+		ASYNC(self->gui, switchGen, 1);
+		ASYNC(self->gui, guiFrecInc, 0);
+		ASYNC(self->gui, guiFrecInc, 0);
+		ASYNC(self->gui, guiFrecReset, 0);
+		ASYNC(self->gui, guiFrecInc, 0);
+		ASYNC(self->gui, guiFrecInc, 0);
+		ASYNC(self->gui, guiFrecDec, 0);
 		ASYNC(self->gui, guiFrecDec, 0);
 	}
 	toggle = !toggle;
-	AFTER(MSEC(69), self, pressSimulator, 0);
+	AFTER(MSEC(50), self, pressSimulator, 0);
 	
 	return 0;
 }
