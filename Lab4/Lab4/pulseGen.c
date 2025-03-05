@@ -9,14 +9,24 @@ int setPulse(Pulsegenerator *self, int arg) {
 	// Om frekvens=0, sätt porten låg och sluta toggla.
     if (self->frec == 0) {
 	    ASYNC(self->wbit, writeBit, 0);
+		self->pulseActive = false;
 	    return 0;
     }
-	// Annars toggla outputHigh (true/false => bit=1/0).
+	
+	// Inom setPulse callar vi med arg 1, så arg == 0 är utanför denna funktion.
+    if (arg == 0) { // Om den är utanför,
+	    if (self->pulseActive) { // Om den redan är aktiv returna bara,
+		    return 0;
+	    }
+	    self->pulseActive = true; // Om den inte är aktiv, sätt den till aktiv och fortsätt
+    } // Sedan kommer SetPulse, 1 after att skippa denna check eftersom den passar arg = 1.
+	
+	// Annars toggla outputHigh.
     ASYNC(self->wbit, toggleBit, 0);
 	
 	// Delay = 1000 / frekvens => period i ms, AFTER planerar nästa anrop.
     int delay = 1000 / self->frec;
-    AFTER(MSEC(delay), self, setPulse, 0);
+    AFTER(MSEC(delay), self, setPulse, 1);
     return 0;
 }
 

@@ -14,10 +14,11 @@ typedef struct {
 	unsigned char frec_old; // Sparad frekvens
 	bool outputHigh;       // true => hög output, false => låg
 	Writebit *wbit; // Pekare till Writebit-objekt för att skriva bitar
+	bool pulseActive; // Samma som holdfunktionen, körs pulse redan?
 } Pulsegenerator;
 
 
-#define initPulse(wbit) { initObject(), 0, 0, false, wbit }
+#define initPulse(wbit) { initObject(), 0, 0, false, wbit, false }
 
 int setPulse(Pulsegenerator *self, int arg); // Toucha inte dehär,
 int getFrec(Pulsegenerator *self, int arg);  // de använder 

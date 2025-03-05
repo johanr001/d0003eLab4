@@ -35,7 +35,7 @@ int startProgram(GUI *self) {
 
 	// Uppdatera displayen omedelbart så vi ser initialfrekvenser (0).
 	ASYNC(self, updateDisplay, 0);
-
+	
 	return 0;
 }
 
