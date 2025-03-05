@@ -11,7 +11,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
                               GUI.o (__do_copy_data)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
-                              TinyTimber.o (__do_clear_bss)
+                              button.o (__do_clear_bss)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_usmulhisi3.o)
                               pulsegen.o (__usmulhisi3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
@@ -40,6 +40,10 @@ Discarded input sections
  .text          0x00000000        0x0 button.o
  .data          0x00000000        0x0 button.o
  .bss           0x00000000        0x0 button.o
+ .text.pressSimulator
+                0x00000000       0xaa button.o
+ .bss.toggle.1804
+                0x00000000        0x1 button.o
  .text          0x00000000        0x0 GUI.o
  .data          0x00000000        0x0 GUI.o
  .bss           0x00000000        0x0 GUI.o
@@ -782,104 +786,104 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x2e8
+.debug_aranges  0x00000000      0x2f0
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x68 button.o
+                0x00000000       0x70 button.o
  .debug_aranges
-                0x00000068       0x58 GUI.o
+                0x00000070       0x58 GUI.o
  .debug_aranges
-                0x000000c0       0x28 interruptHandler.o
+                0x000000c8       0x28 interruptHandler.o
  .debug_aranges
-                0x000000e8       0x28 main.o
+                0x000000f0       0x28 main.o
  .debug_aranges
-                0x00000110       0x40 pulsegen.o
+                0x00000118       0x40 pulsegen.o
  .debug_aranges
-                0x00000150       0x20 avr_init.o
+                0x00000158       0x20 avr_init.o
  .debug_aranges
-                0x00000170      0x150 TinyTimber.o
+                0x00000178      0x150 TinyTimber.o
  .debug_aranges
-                0x000002c0       0x28 writeBit.o
+                0x000002c8       0x28 writeBit.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x39f4
+.debug_info     0x00000000     0x3b2d
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x7b6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega169p/avr5/crtatmega169p.o
- .debug_info    0x000007b6      0x88c button.o
- .debug_info    0x00001042      0x818 GUI.o
- .debug_info    0x0000185a      0x39e interruptHandler.o
- .debug_info    0x00001bf8      0x58d main.o
- .debug_info    0x00002185      0x4ab pulsegen.o
- .debug_info    0x00002630       0x8e avr_init.o
- .debug_info    0x000026be     0x11de TinyTimber.o
- .debug_info    0x0000389c      0x158 writeBit.o
+ .debug_info    0x000007b6      0x9c5 button.o
+ .debug_info    0x0000117b      0x818 GUI.o
+ .debug_info    0x00001993      0x39e interruptHandler.o
+ .debug_info    0x00001d31      0x58d main.o
+ .debug_info    0x000022be      0x4ab pulsegen.o
+ .debug_info    0x00002769       0x8e avr_init.o
+ .debug_info    0x000027f7     0x11de TinyTimber.o
+ .debug_info    0x000039d5      0x158 writeBit.o
 
-.debug_abbrev   0x00000000     0x12a4
+.debug_abbrev   0x00000000     0x12b3
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x74b C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega169p/avr5/crtatmega169p.o
- .debug_abbrev  0x0000074b      0x11b button.o
- .debug_abbrev  0x00000866      0x199 GUI.o
- .debug_abbrev  0x000009ff       0xf8 interruptHandler.o
- .debug_abbrev  0x00000af7      0x159 main.o
- .debug_abbrev  0x00000c50      0x132 pulsegen.o
- .debug_abbrev  0x00000d82       0x51 avr_init.o
- .debug_abbrev  0x00000dd3      0x407 TinyTimber.o
- .debug_abbrev  0x000011da       0xca writeBit.o
+ .debug_abbrev  0x0000074b      0x12a button.o
+ .debug_abbrev  0x00000875      0x199 GUI.o
+ .debug_abbrev  0x00000a0e       0xf8 interruptHandler.o
+ .debug_abbrev  0x00000b06      0x159 main.o
+ .debug_abbrev  0x00000c5f      0x132 pulsegen.o
+ .debug_abbrev  0x00000d91       0x51 avr_init.o
+ .debug_abbrev  0x00000de2      0x407 TinyTimber.o
+ .debug_abbrev  0x000011e9       0xca writeBit.o
 
-.debug_line     0x00000000     0x19c7
+.debug_line     0x00000000     0x19fc
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x122 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega169p/avr5/crtatmega169p.o
- .debug_line    0x00000122      0x2ee button.o
- .debug_line    0x00000410      0x235 GUI.o
- .debug_line    0x00000645      0x126 interruptHandler.o
- .debug_line    0x0000076b      0x152 main.o
- .debug_line    0x000008bd      0x1cf pulsegen.o
- .debug_line    0x00000a8c       0xcd avr_init.o
- .debug_line    0x00000b59      0xd7f TinyTimber.o
- .debug_line    0x000018d8       0xef writeBit.o
+ .debug_line    0x00000122      0x323 button.o
+ .debug_line    0x00000445      0x235 GUI.o
+ .debug_line    0x0000067a      0x126 interruptHandler.o
+ .debug_line    0x000007a0      0x152 main.o
+ .debug_line    0x000008f2      0x1cf pulsegen.o
+ .debug_line    0x00000ac1       0xcd avr_init.o
+ .debug_line    0x00000b8e      0xd7f TinyTimber.o
+ .debug_line    0x0000190d       0xef writeBit.o
 
-.debug_frame    0x00000000      0xe7c
+.debug_frame    0x00000000      0xeb4
  *(.debug_frame)
- .debug_frame   0x00000000      0x1cc button.o
- .debug_frame   0x000001cc      0x16c GUI.o
- .debug_frame   0x00000338       0x74 interruptHandler.o
- .debug_frame   0x000003ac       0x5c main.o
- .debug_frame   0x00000408       0xd4 pulsegen.o
- .debug_frame   0x000004dc       0x24 avr_init.o
- .debug_frame   0x00000500      0x948 TinyTimber.o
- .debug_frame   0x00000e48       0x34 writeBit.o
+ .debug_frame   0x00000000      0x204 button.o
+ .debug_frame   0x00000204      0x16c GUI.o
+ .debug_frame   0x00000370       0x74 interruptHandler.o
+ .debug_frame   0x000003e4       0x5c main.o
+ .debug_frame   0x00000440       0xd4 pulsegen.o
+ .debug_frame   0x00000514       0x24 avr_init.o
+ .debug_frame   0x00000538      0x948 TinyTimber.o
+ .debug_frame   0x00000e80       0x34 writeBit.o
 
-.debug_str      0x00000000      0xa4f
+.debug_str      0x00000000      0xa65
  *(.debug_str)
  .debug_str     0x00000000      0x2b3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega169p/avr5/crtatmega169p.o
- .debug_str     0x000002b3      0x270 button.o
-                                0x2a4 (size before relaxing)
- .debug_str     0x00000523       0x8d GUI.o
+ .debug_str     0x000002b3      0x286 button.o
+                                0x2ba (size before relaxing)
+ .debug_str     0x00000539       0x8d GUI.o
                                 0x287 (size before relaxing)
- .debug_str     0x000005b0       0x47 interruptHandler.o
+ .debug_str     0x000005c6       0x47 interruptHandler.o
                                 0x26c (size before relaxing)
- .debug_str     0x000005f7      0x164 main.o
+ .debug_str     0x0000060d      0x164 main.o
                                 0x3b3 (size before relaxing)
- .debug_str     0x0000075b       0x27 pulsegen.o
+ .debug_str     0x00000771       0x27 pulsegen.o
                                 0x220 (size before relaxing)
- .debug_str     0x00000782       0x10 avr_init.o
+ .debug_str     0x00000798       0x10 avr_init.o
                                 0x16f (size before relaxing)
- .debug_str     0x00000792      0x29a TinyTimber.o
+ .debug_str     0x000007a8      0x29a TinyTimber.o
                                 0x55b (size before relaxing)
- .debug_str     0x00000a2c       0x23 writeBit.o
+ .debug_str     0x00000a42       0x23 writeBit.o
                                 0x1b1 (size before relaxing)
 
-.debug_loc      0x00000000     0x3378
+.debug_loc      0x00000000     0x347f
  *(.debug_loc)
- .debug_loc     0x00000000      0x77d button.o
- .debug_loc     0x0000077d      0x66f GUI.o
- .debug_loc     0x00000dec      0x15e interruptHandler.o
- .debug_loc     0x00000f4a       0xc3 main.o
- .debug_loc     0x0000100d      0x34e pulsegen.o
- .debug_loc     0x0000135b     0x1f69 TinyTimber.o
- .debug_loc     0x000032c4       0xb4 writeBit.o
+ .debug_loc     0x00000000      0x884 button.o
+ .debug_loc     0x00000884      0x66f GUI.o
+ .debug_loc     0x00000ef3      0x15e interruptHandler.o
+ .debug_loc     0x00001051       0xc3 main.o
+ .debug_loc     0x00001114      0x34e pulsegen.o
+ .debug_loc     0x00001462     0x1f69 TinyTimber.o
+ .debug_loc     0x000033cb       0xb4 writeBit.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -899,16 +903,16 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x268
+.debug_ranges   0x00000000      0x270
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x58 button.o
- .debug_ranges  0x00000058       0x48 GUI.o
- .debug_ranges  0x000000a0       0x18 interruptHandler.o
- .debug_ranges  0x000000b8       0x18 main.o
- .debug_ranges  0x000000d0       0x30 pulsegen.o
- .debug_ranges  0x00000100       0x10 avr_init.o
- .debug_ranges  0x00000110      0x140 TinyTimber.o
- .debug_ranges  0x00000250       0x18 writeBit.o
+ .debug_ranges  0x00000000       0x60 button.o
+ .debug_ranges  0x00000060       0x48 GUI.o
+ .debug_ranges  0x000000a8       0x18 interruptHandler.o
+ .debug_ranges  0x000000c0       0x18 main.o
+ .debug_ranges  0x000000d8       0x30 pulsegen.o
+ .debug_ranges  0x00000108       0x10 avr_init.o
+ .debug_ranges  0x00000118      0x140 TinyTimber.o
+ .debug_ranges  0x00000258       0x18 writeBit.o
 
 .debug_macro
  *(.debug_macro)
