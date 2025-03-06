@@ -79,6 +79,9 @@ int buttonCheckerUDC(Button *self, int arg) {
 	if (PRESSEDCN) {
 		centerdir(self, 0);
 	}
+	else {
+		self->heldCenter = false;
+	}
 	return 0;
 }
 
@@ -133,36 +136,12 @@ int downdir(Button *self, int arg) {
 }
 // centerdir() => anropar guiFrecReset() för att växla mellan lagrad/återställd frekvens.
 int centerdir(Button *self, int arg) {
-	if (PRESSEDCN) {
-		AFTER(MSEC(100),self->gui, guiFrecReset, 0);
-	}
-	return 0;
-}
-
-int pressSimulator(Button *self, int arg) {
-	static bool toggle = 0;
-	
-	if (toggle) {
-		ASYNC(self->gui, switchGen, 0);
-		ASYNC(self->gui, guiFrecInc, 0);
-		ASYNC(self->gui, guiFrecInc, 0);
+	if (PRESSEDCN && !self->heldCenter) {
+		self->heldCenter = true;
 		ASYNC(self->gui, guiFrecReset, 0);
-		ASYNC(self->gui, guiFrecInc, 0);
-		ASYNC(self->gui, guiFrecInc, 0);
-		ASYNC(self->gui, guiFrecDec, 0);
-		ASYNC(self->gui, guiFrecDec, 0);
-		} else {
-		ASYNC(self->gui, switchGen, 1);
-		ASYNC(self->gui, guiFrecInc, 0);
-		ASYNC(self->gui, guiFrecInc, 0);
-		ASYNC(self->gui, guiFrecReset, 0);
-		ASYNC(self->gui, guiFrecInc, 0);
-		ASYNC(self->gui, guiFrecInc, 0);
-		ASYNC(self->gui, guiFrecDec, 0);
-		ASYNC(self->gui, guiFrecDec, 0);
 	}
-	toggle = !toggle;
-	AFTER(MSEC(50), self, pressSimulator, 0);
-	
+	else if (!PRESSEDCN) {
+		self->heldCenter = false;
+	}
 	return 0;
 }

@@ -36,8 +36,7 @@ int startProgram(GUI *self) {
 	// Uppdatera displayen omedelbart så vi ser initialfrekvenser (0).
 	ASYNC(self, updateDisplay, 0);
 	
-	//AFTER(MSEC(500), &button, pressSimulator, 0);
-	
+
 	return 0;
 }
 

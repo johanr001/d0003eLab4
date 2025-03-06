@@ -19,10 +19,11 @@ typedef struct {
 	bool heldDown; // Checkar om "DOWN" är nedtryckt.
 	bool holdUpRunning; // Checkar om HoldUp funktion är running, så vi inte får extra om man clickar snabbt. Då får vi flera scrolls som kör samtidigt.
 	bool holdDownRunning; // Checkar om HoldUp funktion är running, så vi inte får extra om man clickar snabbt. Då får vi flera scrolls som kör samtidigt.
+	bool heldCenter;
 } Button;
 
 
-#define initButton(gui) { initObject(), gui, 0, 0, 0, 0 }
+#define initButton(gui) { initObject(), gui, 0, 0, 0, 0, 0 }
 
 void btn_init();
 
