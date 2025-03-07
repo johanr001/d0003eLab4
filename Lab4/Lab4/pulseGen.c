@@ -34,7 +34,7 @@ int FrecInc(Pulsegenerator *self, int arg) {
 	    self->frec++;
     }
     return 0;
-    }
+}
 
 
 // FrecDec() minskar frekvensen ned till minst 0 (stoppa togglingen om den blir 0).
@@ -51,10 +51,10 @@ int FrecReset(Pulsegenerator *self, int arg) {
     if (self->frec == 0) {
 	    self->frec = self->frec_old;
 	    } 
-		else {
+	else {
 	    self->frec_old = self->frec;
 	    self->frec = 0;
 	    ASYNC(self->wbit, writeBit, 0);
     }
     return 0;
-   }
+}

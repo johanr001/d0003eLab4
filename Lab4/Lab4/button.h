@@ -17,9 +17,12 @@ typedef struct {
 	GUI *gui;
 	bool heldUp; // Checkar om "UP" är nedtryckt.
 	bool heldDown; // Checkar om "DOWN" är nedtryckt.
+	bool heldLeft;
+	bool heldRight;
 	bool holdUpRunning; // Checkar om HoldUp funktion är running, så vi inte får extra om man clickar snabbt. Då får vi flera scrolls som kör samtidigt.
 	bool holdDownRunning; // Checkar om HoldUp funktion är running, så vi inte får extra om man clickar snabbt. Då får vi flera scrolls som kör samtidigt.
 	bool heldCenter;
+
 } Button;
 
 

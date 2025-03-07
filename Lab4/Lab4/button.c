@@ -55,8 +55,14 @@ int buttonCheckerLR(Button *self, int arg) {
 	if (PRESSEDLT) {
 		leftdir(self, 0);
 	}
+	else {
+		self->heldLeft = false;
+	}
 	if (PRESSEDRT) {
 		rightdir(self, 0);
+	}
+	else {
+		self->heldRight = false;
 	}
 	return 0;
 }
@@ -87,16 +93,25 @@ int buttonCheckerUDC(Button *self, int arg) {
 
 // leftdir() => anropar switchGen(0) för att välja vänster generator.
 int leftdir(Button *self, int arg) {
-	if (PRESSEDLT) {
+	if (PRESSEDLT && !self->heldLeft) {
+		self->heldLeft = true;
 		ASYNC(self->gui, switchGen, 0);
+	}
+	
+	else if (!PRESSEDLT) {
+		self->heldLeft = false;
 	}
 	return 0;
 }
 
 // rightdir() => anropar switchGen(1) för höger generator.
 int rightdir(Button *self, int arg) {
-	if (PRESSEDRT) {
+	if (PRESSEDRT && !self->heldRight) {
+		self->heldRight = true;
 		ASYNC(self->gui, switchGen, 1);
+	}
+	else if (!PRESSEDRT) {
+		self->heldRight = false;
 	}
 	return 0;
 }
