@@ -1490,7 +1490,6 @@ int startProgram(GUI *self) {
      91e:	cb 01       	movw	r24, r22
      920:	0e 94 8f 0f 	call	0x1f1e	; 0x1f1e <async>
 	
-
 	return 0;
 }
      924:	80 e0       	ldi	r24, 0x00	; 0
