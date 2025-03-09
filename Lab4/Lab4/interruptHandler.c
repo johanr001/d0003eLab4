@@ -8,13 +8,11 @@
 #include "interruptHandler.h"
 
 int horizontal(Interrupthandler *self, int arg) {
-	
-	ASYNC(self->button, buttonCheckerLR, 0);
+	SYNC(self->button, buttonCheckerLR, 0);
 	return 0;
 }
 
 int vertandcent(Interrupthandler *self, int arg) {
-	
-	ASYNC(self->button, buttonCheckerUDC, 0);
+	SYNC(self->button, buttonCheckerUDC, 0);
 	return 0;
 }

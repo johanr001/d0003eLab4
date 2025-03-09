@@ -26,7 +26,7 @@ int holdCheckerUp(Button *self, int arg) {
 		return 0;
 	}
 	if (self->holdUpRunning && PRESSEDUP) { // Om knappen fortfarande hålls nere
-		ASYNC(self->gui, guiFrecInc, 0); // Öka frekvensen
+		SYNC(self->gui, guiFrecInc, 0); // Öka frekvensen
 		AFTER(MSEC(100), self, holdCheckerUp, 0); // En ny körning efter 1000ms
 	}
 	else { // Om knappen har släppts, avsluta håll-funktionen
@@ -41,7 +41,7 @@ int holdCheckerDown(Button *self, int arg) {
 		return 0;
 	}
 	if (self->holdDownRunning && PRESSEDDN) { // Om knappen fortfarande hålls nere
-		ASYNC(self->gui, guiFrecDec, 0); // Minska frekvensen
+		SYNC(self->gui, guiFrecDec, 0); // Minska frekvensen
 		AFTER(MSEC(100), self, holdCheckerDown, 0); // En ny körning efter 1000ms
 	}
 	else { // Om knappen har släppts, sätt Running till false.
@@ -52,13 +52,13 @@ int holdCheckerDown(Button *self, int arg) {
 
 // buttonCheckerLR() kontrollerar om vänster eller höger knappen har blivit tryckt.
 int buttonCheckerLR(Button *self, int arg) {
-	if (PRESSEDLT) {
+	if (PRESSEDLT && !self->heldLeft) {
 		leftdir(self, 0);
 	}
 	else {
 		self->heldLeft = false;
 	}
-	if (PRESSEDRT) {
+	if (PRESSEDRT && !self->heldRight) {
 		rightdir(self, 0);
 	}
 	else {
@@ -70,19 +70,19 @@ int buttonCheckerLR(Button *self, int arg) {
 
 // buttonCheckerUDC() kontrollerar om upp, ner eller center knappen har blivit tryckt.
 int buttonCheckerUDC(Button *self, int arg) {
-	if (PRESSEDUP) {
+	if (PRESSEDUP && !self->heldUp) {
 		updir(self, 0);
 	}
 	else {
 		self->heldUp = false; // Om knappen inte är nedtryckt, sätt heldUp till False
 	}
-	if (PRESSEDDN) {
+	if (PRESSEDDN && !self->heldDown) {
 		downdir(self, 0); // Hantera ner-knappen
 	}
 	else {
 		self->heldDown = false; // Om knappen inte är nedtryckt, sätt heldDown till False
 	}
-	if (PRESSEDCN) {
+	if (PRESSEDCN && !self->heldCenter) {
 		centerdir(self, 0);
 	}
 	else {
@@ -95,7 +95,7 @@ int buttonCheckerUDC(Button *self, int arg) {
 int leftdir(Button *self, int arg) {
 	if (PRESSEDLT && !self->heldLeft) {
 		self->heldLeft = true;
-		ASYNC(self->gui, switchGen, 0);
+		SYNC(self->gui, switchGen, 0);
 	}
 	
 	else if (!PRESSEDLT) {
@@ -108,7 +108,7 @@ int leftdir(Button *self, int arg) {
 int rightdir(Button *self, int arg) {
 	if (PRESSEDRT && !self->heldRight) {
 		self->heldRight = true;
-		ASYNC(self->gui, switchGen, 1);
+		SYNC(self->gui, switchGen, 1);
 	}
 	else if (!PRESSEDRT) {
 		self->heldRight = false;
@@ -121,7 +121,7 @@ int updir(Button *self, int arg) {
 	// Kontrollera om "UP" är nedtryckt och inte redan held
 	if (PRESSEDUP && !self->heldUp) {
 		self->heldUp = true; // Markera att knappen hålls nere
-		ASYNC(self->gui, guiFrecInc, 0); // Öka frekvensen direkt vid första trycket
+		SYNC(self->gui, guiFrecInc, 0); // Öka frekvensen direkt vid första trycket
 		if (!self->holdUpRunning) { // Checka om hold funktionen redan körs
 			self->holdUpRunning = true;
 			AFTER(MSEC(500), self, holdCheckerUp, 0); // Starta holdCheckerUp efter 500ms
@@ -138,7 +138,7 @@ int downdir(Button *self, int arg) {
 	// Kontrollera om "DOWN" är nedtryckt och inte redan held
 	if (PRESSEDDN && !self->heldDown) {
 		self->heldDown = true; // Markera att knappen hålls nere
-		ASYNC(self->gui, guiFrecDec, 0); // Minska frekvensen direkt vid första trycket
+		SYNC(self->gui, guiFrecDec, 0); // Minska frekvensen direkt vid första trycket
 		if (!self->holdDownRunning) { // Kontrollera om hold funktionen redan körs
 			self->holdDownRunning = true;
 			AFTER(MSEC(500), self, holdCheckerDown, 0); // Starta holdCheckerDown efter 500ms
@@ -153,7 +153,7 @@ int downdir(Button *self, int arg) {
 int centerdir(Button *self, int arg) {
 	if (PRESSEDCN && !self->heldCenter) {
 		self->heldCenter = true;
-		ASYNC(self->gui, guiFrecReset, 0);
+		SYNC(self->gui, guiFrecReset, 0);
 	}
 	else if (!PRESSEDCN) {
 		self->heldCenter = false;
