@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include "TinyTimber.h"
 
+
 // Writebit-objekt kan skriva eller toggla en viss bit i PORTE.
 typedef struct {
 	Object super;

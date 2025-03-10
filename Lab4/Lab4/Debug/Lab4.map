@@ -30,7 +30,7 @@ otable              0x24              TinyTimber.o
 threads             0x74              TinyTimber.o
 mtable              0x24              TinyTimber.o
 thread0             0x1d              TinyTimber.o
-messages            0x140             TinyTimber.o
+messages            0xf0              TinyTimber.o
 stacks              0x180             TinyTimber.o
 
 Discarded input sections
@@ -679,7 +679,7 @@ END GROUP
                 0x00800156                _edata = .
                 0x00800156                PROVIDE (__data_end, .)
 
-.bss            0x00800156      0x3a3
+.bss            0x00800156      0x353
                 0x00800156                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
@@ -694,22 +694,22 @@ END GROUP
  .bss.msgQ      0x0080015e        0x2 TinyTimber.o
                 0x0080015e                msgQ
  *(COMMON)
- COMMON         0x00800160      0x399 TinyTimber.o
+ COMMON         0x00800160      0x349 TinyTimber.o
                 0x00800160                otable
                 0x00800184                threads
                 0x008001f8                mtable
                 0x0080021c                thread0
                 0x00800239                messages
-                0x00800379                stacks
-                0x008004f9                PROVIDE (__bss_end, .)
+                0x00800329                stacks
+                0x008004a9                PROVIDE (__bss_end, .)
                 0x00002468                __data_load_start = LOADADDR (.data)
                 0x000024be                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008004f9        0x0
+.noinit         0x008004a9        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008004f9                _end = .
+                0x008004a9                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0

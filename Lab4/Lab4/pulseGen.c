@@ -16,7 +16,7 @@ int setPulse(Pulsegenerator *self, int arg) {
 		ASYNC(self->wbit, toggleBit, 0);
 		
 		// Delay = 1000 / frekvens => period i ms, AFTER planerar nästa anrop.
-		int delay = 1000 / self->frec;
+		int delay = 500 / self->frec;
 		AFTER(MSEC(delay), self, setPulse, 0);
 	}
 	return 0;

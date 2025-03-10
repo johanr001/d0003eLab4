@@ -1,6 +1,5 @@
 #include "writeBit.h"
-#include <avr/io.h>
-#include "TinyTimber.h"
+
 
 // writeBit() sätter eller rensar angiven bit i PORTE.
 int writeBit(Writebit *self, int arg) {
