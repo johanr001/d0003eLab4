@@ -121,10 +121,9 @@ int updir(Button *self, int arg) {
 	// Kontrollera om "UP" är nedtryckt och inte redan held
 	if (PRESSEDUP && !self->heldUp) {
 		self->heldUp = true; // Markera att knappen hålls nere
-		SYNC(self->gui, guiFrecInc, 0); // Öka frekvensen direkt vid första trycket
 		if (!self->holdUpRunning) { // Checka om hold funktionen redan körs
 			self->holdUpRunning = true;
-			AFTER(MSEC(500), self, holdCheckerUp, 0); // Starta holdCheckerUp efter 500ms
+			AFTER(MSEC(50), self, holdCheckerUp, 0); // Starta holdCheckerUp efter 50ms
 		}
 	}
 	else if (!PRESSEDUP) { // När knappen släpps, återställ flaggan
@@ -138,10 +137,9 @@ int downdir(Button *self, int arg) {
 	// Kontrollera om "DOWN" är nedtryckt och inte redan held
 	if (PRESSEDDN && !self->heldDown) {
 		self->heldDown = true; // Markera att knappen hålls nere
-		SYNC(self->gui, guiFrecDec, 0); // Minska frekvensen direkt vid första trycket
 		if (!self->holdDownRunning) { // Kontrollera om hold funktionen redan körs
 			self->holdDownRunning = true;
-			AFTER(MSEC(500), self, holdCheckerDown, 0); // Starta holdCheckerDown efter 500ms
+			AFTER(MSEC(50), self, holdCheckerDown, 0); // Starta holdCheckerDown efter 50ms
 		}
 	}
 	else if (!PRESSEDDN) { // När knappen släpps, återställ flaggan

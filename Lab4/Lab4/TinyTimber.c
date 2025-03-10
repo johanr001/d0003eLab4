@@ -44,7 +44,7 @@
 #include <avr/interrupt.h>
 
 #define STACKSIZE       96
-#define NMSGS           20
+#define NMSGS			20
 #define NTHREADS        4
 
 #define STATUS()        (SREG & 0x80)
