@@ -136,3 +136,16 @@ int guiFrecReset(GUI *self, int arg) {
 	ASYNC(self, updateDisplay, 0);
 	return 0;
 }
+
+// startProgram() körs vid uppstart. Den startar genereringen av pulser
+// och anropar updateDisplay vid start.
+int startProgram(GUI *self) {
+	// Starta båda pulsgeneratorerna direkt (ASYNC så att vi inte blockerar).
+	ASYNC(self->gen1, setPulse, 0);
+	ASYNC(self->gen2, setPulse, 0);
+
+	// Uppdatera displayen omedelbart så vi ser initialfrekvenser (0).
+	ASYNC(self, updateDisplay, 0);
+	
+	return 0;
+}

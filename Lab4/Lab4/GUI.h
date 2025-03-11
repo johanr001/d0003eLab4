@@ -22,6 +22,7 @@ int updateDisplay(GUI *self, int arg);
 int guiFrecInc(GUI *self, int arg);
 int guiFrecDec(GUI *self, int arg);
 int guiFrecReset(GUI *self, int arg);
+int startProgram(GUI *self);
 
 void lcd_init(void);
 void writeChar(char ch, int pos);
